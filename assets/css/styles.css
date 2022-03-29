@@ -1,23 +1,31 @@
-body > section:first-child{
-    border: 2px solid red;
+section#bg-container1{
+    /* border: 2px solid red; */
     overflow: hidden;
 
 }
 
-body > section:first-child > section{
-    border: 2px solid green;
+section#bg-container1 > section#bg-container2{
+    /* border: 2px solid green; */
     display: flex;
     height: 100vh; 
     width: 300%;
 }
 
-body > section:first-child > section > div.bg{
-    border: 2px solid blue;
+section#bg-container1 > section#bg-container2 > div.bg{
+    /* border: 2px solid blue; */
     width: 100%;
     background-image: url('../images/bg.jpg');
     background-size: cover;
     background-position: center;
+
+    
 }
+
+div#sonic.flip-standing{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 
 div#sonic{
     width: 238px;
@@ -30,6 +38,8 @@ div#sonic{
     background-image: url('../images/sonic_standing.gif');
     background-position: center;
     background-size: cover;
+    /* -webkit-transform: scaleX(-1);
+    transform: scaleX(-1); */
 }
 
 div#ring{
