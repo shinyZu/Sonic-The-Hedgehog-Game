@@ -94,45 +94,34 @@ function removeClass() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// var timer = false;
-// var pressedTime = 3000; //one second
-
 $(document).on({
 
     keydown: function (e) {
-        // var charCode = (e.which) ? e.which : e.keyCode, keyP;
         if (e.key === "ArrowRight") {
-            console.log("keydown");
+            // setTimeout(removeClass, 500);
+            $("#sonic").removeClass("flip-standing");
             $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
-            // $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
 
-            // if (!timer) {
-            //     timer = setTimeout(function () {
-            //         clearTimeout(timer);
-            //         timer = false;
-            //         // alert(keyP + ' arrow key held down for 1 second');
-            //         $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
-            //     }, pressedTime);
-            // }
         }
 
         if (e.key == "Control") {
-            console.log(e);
-            console.log("keydown");
             $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
         }
 
         if (e.key === "ArrowUp") {
-            console.log("keydown");
             $("#sonic").css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        }
+
+        if (e.key === "ArrowLeft") {
+            console.log("ArrowLeft");
+            $("#sonic").addClass("flip-standing");
+            $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
         }
     },
 
     keyup: function () {
         console.log("keyup");
         $("#sonic").css("background-image", "url('../assets/images/sonic_standing.gif')");
-        // clearTimeout(timer);
-        // timer = false;
     }
 });
 
