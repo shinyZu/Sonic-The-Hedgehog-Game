@@ -3,125 +3,126 @@ function stop() {
     $("#sonic").css("background-image", "url('../assets/images/sonic_standing.gif')");
 }
 
-function removeClass() {
-    $("#sonic").removeClass("flip-standing");
-}
-
-// $(document).keydown(function (e) {
-//     console.log(e);
-//     if (e.key === "ArrowRight") {
-//         e.originalEvent.repeat = true;
-//         console.log(e.originalEvent.repeat);
-//         $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
-//         setTimeout(stop, 300);
-
-
-//         // $("#sonic").addClass("flip-standing");
-//         // setTimeout(removeClass, 500);
-//         // $("#sonic").animate({
-//         //     left: "+=980"
-//         // });
-
-//     } else if (e.key === "ArrowDown") {
-//         $("#sonic").css("background-image", "url('../assets/images/sonic_spinning.gif')");
-//         setTimeout(stop, 200);
-
-//     } else if (e.key === "ArrowLeft") {
-//         $("#sonic").css("background-image", "url('../assets/images/sonic_standing.gif')");
-//         setTimeout(stop, 200);
-
-//     } else if (e.key === "ArrowUp") {
-//         $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
-//         setTimeout(stop, 200);
-
-//     } else if (e.key === " ") {
-//         $("#sonic").css("background-image", "url('../assets/images/sonic_spinning.gif')");
-//         setTimeout(stop, 200);
-//     }
-
-// });
-
-
-// var timer = false;
-// var pressedTime = 1000; //one second
-
 // $(document).on({
-
 //     keydown: function (e) {
-//         var charCode = (e.which) ? e.which : e.keyCode, keyP;
-//         if (charCode === 37) keyP = 'left';
-//         if (charCode === 38) keyP = 'up';
-//         if (charCode === 39) keyP = 'right';
-//         if (charCode === 40) keyP = 'down';
+//         if (e.key === "ArrowRight") {
+//             $("#sonic").removeClass("flip-standing");
+//             $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
 
-//         if (!timer) {
-//             timer = setTimeout(function () {
-//                 clearTimeout(timer);
-//                 timer = false;
-//                 alert(keyP + ' arrow key held down for 1 second');
-//                 // $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
-//             }, pressedTime);
+//             $("#sonic").finish().animate({
+//                 left: "+=10"
+//             });
+
+//         }
+
+//         if (e.key == "Control") {
+//             $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
+//         }
+
+//         if (e.key === "ArrowUp") {
+//             $("#sonic").css("background-image", "url('../assets/images/sonic_spinning.gif')");
+//         }
+
+//         if (e.key === "ArrowLeft") {
+//             $("#sonic").addClass("flip-standing");
+//             $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
 //         }
 //     },
 
 //     keyup: function () {
-//         clearTimeout(timer);
-//         timer = false;
+//         console.log("keyup");
+//         $("#sonic").css("background-image", "url('../assets/images/sonic_standing.gif')");
 //     }
 // });
-
-// var pressed = null;
-// $(document).on('keydown', function (event) {
-//     pressed = +new Date();
-//     console.log(pressed);
-//     // do whatever else you need upon key down
-//     $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
-// });
-
-// $(document).on('keyup', function (event) {
-//     console.log(+new Date());
-//     var duration = +new Date() - pressed;
-//     console.log(duration);
-//     pressed = null;
-//     // do whatever you need to do based on the duration of the press
-// });
-
-// $(document).keyup(function (e) {
-//     if (e.key === "ArrowRight") {
-//         $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
-//     }
-// });
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).on({
-
     keydown: function (e) {
-        if (e.key === "ArrowRight") {
-            // setTimeout(removeClass, 500);
-            $("#sonic").removeClass("flip-standing");
-            $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
+        console.log(e);
+        switch (e.which) {
+            case 37: // left
+                $("#sonic").addClass("flip-standing");
+                $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
 
+                $("#sonic").finish().animate({
+                    left: "-=10"
+                });
+
+                break;
+
+            case 38: // up
+                $("#sonic").css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                break;
+
+            case 39: // right
+                $("#sonic").removeClass("flip-standing");
+                $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
+
+                $("#sonic").finish().animate({
+                    left: "+=10"
+                });
+
+                break;
+
+            case 66: // B
+
+                $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
+
+
+                if ($("#sonic").hasClass("flip-standing")) { // if turn back
+                    $("#sonic").finish().animate({
+                        left: "-=50"
+                    });
+
+                } else {
+                    $("#sonic").finish().animate({
+                        left: "+=50"
+                    });
+                }
+
+
+                break;
+
+            default:
+                break;
         }
 
-        if (e.key == "Control") {
-            $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
-        }
+        // if (e.key === "ArrowRight") {
+        //     $("#sonic").removeClass("flip-standing");
+        //     $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
 
-        if (e.key === "ArrowUp") {
-            $("#sonic").css("background-image", "url('../assets/images/sonic_spinning.gif')");
-        }
+        //     $("#sonic").finish().animate({
+        //         left: "+=10"
+        //     });
 
-        if (e.key === "ArrowLeft") {
-            console.log("ArrowLeft");
-            $("#sonic").addClass("flip-standing");
-            $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
-        }
+        // }
+
+        // if (e.key == "Control") {
+        //     $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
+        //     $("#sonic").finish().animate({
+        //         left: "+=50"
+        //     });
+        // }
+
+        // if (e.key === "ArrowUp") {
+        //     $("#sonic").css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        // }
+
+        // if (e.key === "ArrowLeft") {
+        //     $("#sonic").addClass("flip-standing");
+        //     $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
+        // }
     },
 
-    keyup: function () {
+    keyup: function (e) {
         console.log("keyup");
         $("#sonic").css("background-image", "url('../assets/images/sonic_standing.gif')");
+
+        // if (e.key == "Control") {
+        //     $("#sonic").css("background-image", "url('../assets/images/sonic_running.gif')");
+        //     $("#sonic").finish().animate({
+        //         left: "+=50"
+        //     });
+        // }
     }
 });
 
