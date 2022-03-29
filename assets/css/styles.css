@@ -1,0 +1,99 @@
+body > section:first-child{
+    border: 2px solid red;
+    overflow: hidden;
+
+}
+
+body > section:first-child > section{
+    border: 2px solid green;
+    display: flex;
+    height: 100vh; 
+    width: 300%;
+}
+
+body > section:first-child > section > div.bg{
+    border: 2px solid blue;
+    width: 100%;
+    background-image: url('../images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+div#sonic{
+    width: 238px;
+    height: 250px;
+    position: absolute;
+    top: 500px;
+    left: 0;
+    bottom: 190px;
+    margin: auto;
+    background-image: url('../images/sonic_standing.gif');
+    background-position: center;
+    background-size: cover;
+}
+
+div#ring{
+    width: 130px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background-image: url('../images/ring3.gif');
+    background-position: center;
+    background-size: cover;
+}
+
+div#sonic_stand{
+    width: 200px;
+    height: 250px;
+    position: absolute;
+    top: 500px;
+    left: 0;
+    bottom: 45px;
+    margin: auto;
+    background-image: url('../images/sonic_standing.gif');
+    background-position: center;
+    background-size: cover;
+}
+
+div#sonic_walk{
+    width: 200px;
+    height: 250px;
+    position: absolute;
+    top: 500px;
+    left: 250px;
+    bottom: 45px;
+    margin: auto;
+    background-image: url('../images/sonic_walking.gif');
+    background-position: center;
+    background-size: cover;
+}
+
+div#sonic_run{
+    width: 200px;
+    height: 250px;
+    position: absolute;
+    top: 500px;
+    left: 500px;
+    bottom: 45px;
+    margin: auto;
+    background-image: url('../images/sonic_running.gif');
+    background-position: center;
+    background-size: cover;
+}
+
+div#sonic_spin{
+    width: 200px;
+    height: 250px;
+    position: absolute;
+    top: 500px;
+    left: 750px;
+    bottom: 45px;
+    margin: auto;
+    background-image: url('../images/sonic_spinning.gif');
+    background-position: center;
+    background-size: cover;
+}
