@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Using Canvas</title>
+
+    <style>
+        * {
+
+box-sizing:border-box;
+margin:0;
+padding:0;
+
+}
+
+html, body {
+
+height:100%;
+width:100%;
+
+}
+
+body {
+
+align-content:space-around;
+background-color:#202830;
+color:#ffffff;
+display:grid;
+justify-content:center;
+
+}
+
+canvas {
+
+background-color:#ffffff;
+
+}
+    </style>
+</head>
+<body onload="startGame()">
+    <canvas></canvas>
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/script-v2.js"></script>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+<body>
+
+<p>Image to use:</p>
+
+<img id="bg" width="220" height="277"
+src="../assets/images/bg.jpg" alt="BG">
+
+<p>Canvas:</p>
+
+<canvas id="myCanvas" width="240" height="297"
+style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+    var canvas;
+window.onload = function() {
+    canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("bg");
+    ctx.drawImage(img, 10, 10);
+};
+</script>
+
+</body>
+</html> -->

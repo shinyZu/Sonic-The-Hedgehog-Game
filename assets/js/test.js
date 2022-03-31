@@ -32,6 +32,7 @@
 
 // });
 
+/* -----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 // var timer = false;
 // var pressedTime = 1000; //one second
@@ -82,3 +83,61 @@
 //         $("#sonic").css("background-image", "url('../assets/images/sonic_walking.gif')");
 //     }
 // });
+
+
+/* -----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+// function Component(element, width, height, x, y, img_src) {
+//     this.element = element;
+//     this.width = width;
+//     this.height = height;
+//     this.x = x;
+//     this.y = y;
+//     this.img_src = img_src;
+// }
+
+// function Character(element, width, height, x, y, img_src) {
+//     Component.apply(this, arguments);
+// }
+
+// Character.prototype = Object.create(Component.prototype);
+// Character.prototype.constructor = Character;
+
+// Character.prototype.x_speed = 0;
+// Character.prototype.y_speed = 0;
+// Character.prototype.jump_state = true;
+// // Character.prototype.new_class = "";
+
+// var c = new Component();
+
+// var element = $("#sonic");
+// var sonic = new Character(element, 238, 250, 0, 0, "../assets/images/sonic_standing.gif");
+
+/* -----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+// var sonic = {
+//     element: $("#sonic"),
+//     jumping: true,
+//     x_speed: 0.5,
+//     y_speed: 0.5,
+//     x_friction: 0.9,
+//     y_friction: 0.9
+// }
+
+
+/* -----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+// if (sonic.hasClass("flip-standing")) { // if turn back
+//     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+//     sonic.finish().animate({
+//         left: "-=20"
+//         // bottom: "+=10"
+
+//     });
+
+// } else {
+//     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+//     sonic.finish().animate({
+//         left: "+=20"
+//     });
+// }
