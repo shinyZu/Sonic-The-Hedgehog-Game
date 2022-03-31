@@ -12,14 +12,17 @@ var isFlipped = false;
 var sonic_xPos = 0;
 var sonic_yPos = 0;
 
-let jump_pad1 = $("#jump_pad1");
+let jump_pad = $("#jump_pad1");
 
 var jumpPad_top;
 var sonic_top;
 
-let jump_pad;
 
 function moveLeft() {
+    if (sonic.position().left <= 0) {
+        avoidMove_atLeftEdge();
+    }
+
     sonic.finish().animate({
         left: "-=10"
     });
@@ -33,12 +36,21 @@ function moveUp() {
 }
 
 function moveRight() {
+    if (sonic.position().left >= 1280) {
+        change_Stage();
+    }
+
     sonic.finish().animate({
         left: "+=10"
     });
+
 }
 
 function moveUp_Left() {
+    if (sonic.position().left <= 0) {
+        avoidMove_atLeftEdge();
+    }
+
     sonic.finish().animate({
         left: "-=20",
         bottom: "+=20"
@@ -46,6 +58,10 @@ function moveUp_Left() {
 }
 
 function moveUp_Right() {
+    if (sonic.position().left >= 1280) {
+        change_Stage();
+    }
+
     sonic.finish().animate({
         left: "+=20",
         bottom: "+=20"
@@ -67,7 +83,7 @@ function avoidMove_atTopEdge() {
 
 function avoidMove_belowGroundLevel() {
     sonic.finish().animate({
-        // top: "459.323 ",
+        top: "459.323 ",
         bottom: "190"
     });
 }
@@ -110,20 +126,30 @@ function change_Stage() {
 }
 
 function roll_forward() {
+    if (sonic.position().left >= 1280) {
+        change_Stage();
+    }
+
     sonic.finish().animate({
         left: "+=20"
     });
 }
 
 function roll_backward() {
-    sonic.finish().animate({
-        left: "-=20"
-    });
+    if (sonic.position().left <= 0) {
+        avoidMove_atLeftEdge();
+
+    } else {
+        sonic.finish().animate({
+            left: "-=20"
+        });
+    }
 }
 
 function boost_Left() {
     if (sonic.position().left <= 0) {
         avoidMove_atLeftEdge();
+
     } else {
         sonic.finish().animate({
             left: "-=50"
@@ -134,14 +160,21 @@ function boost_Left() {
 function boost_Right() {
     if (sonic.position().left >= 1280) {
         change_Stage();
-    } else {
-        sonic.finish().animate({
-            left: "+=50"
-        });
     }
+
+    sonic.finish().animate({
+        left: "+=50"
+    });
+
+
 }
 
 function jump_OnSpaceBar() {
+    if (sonic.position().top >= -300) {
+        console.log(sonic.position().top);
+        avoidMove_atTopEdge();
+    }
+
     sonic.finish().animate({
         bottom: "+=20"
         // top: "-=20"
@@ -163,10 +196,6 @@ var controller = $(document).on({
                 } else { // up + left
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
                     moveUp_Left();
-                }
-
-                if (sonic.position().left <= 0) {
-                    avoidMove_atLeftEdge();
                 }
 
                 break;
@@ -193,15 +222,11 @@ var controller = $(document).on({
 
                     moveRight();
 
-                    if (sonic.position().left >= 1280) {
-                        change_Stage();
-                    }
-
                 } else { // up + right
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
                     moveUp_Right();
 
-                    if (sonic.position().top >= -jump_pad1.position().top) {
+                    if (sonic.position().top >= -jump_pad.position().top) {
                         console.log(sonic.position().top);
                         sonic_yPos = sonic.position().top;
                         // jump_state = true;
@@ -241,10 +266,6 @@ var controller = $(document).on({
             case 32: // space bar --> to jump at same position
                 sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
                 jump_OnSpaceBar();
-                if (sonic.position().top >= -300) {
-                    console.log(sonic.position().top);
-                    avoidMove_atTopEdge();
-                }
                 break;
 
             default:
@@ -258,7 +279,7 @@ var controller = $(document).on({
             avoidMove_belowGroundLevel();
         }
 
-        if (e.which == 39 && sonic.position().top >= -jump_pad1.position().top) {
+        if (e.which == 39 && sonic.position().top >= -jump_pad.position().top) {
             console.log(sonic.position().top);
 
             // sonic.finish().animate({

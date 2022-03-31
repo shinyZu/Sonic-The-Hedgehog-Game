@@ -36,7 +36,8 @@ div#sonic.flip-standing {
 } */
 
 div#sonic {
-    width: 238px;
+    /* width: 238px; */
+    width: 180px;
     height: 250px;
     position: absolute;
     /* top: 500px; */
@@ -94,6 +95,7 @@ div#sonic_run {
 
 div#sonic_spin {
     width: 200px;
+    /* width: 180px; */
     height: 250px;
     position: absolute;
     top: 500px;
