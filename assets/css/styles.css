@@ -1,25 +1,26 @@
 section#bg-container1 {
-    /* border: 2px solid red; */
+    border: 2px solid red;
     overflow: hidden;
 
 }
 
 section#bg-container1>section#bg-container2 {
-    /* border: 2px solid green; */
+    border: 2px solid green;
     display: flex;
     height: 100vh;
     width: 400%;
 }
 
-section#bg-container1>section#bg-container2 div.bg {
-    /* border: 2px solid blue; */
+section#bg-container1>section#bg-container2>div.bg {
+    border: 2px solid blue;
     width: 100%;
+    /* display: flex; */
     background-image: url('../images/bg.jpg');
     background-size: cover;
     background-position: center;
-
-
 }
+
+/* ------------------------------Character Positions & Pauses-------------------------------- */
 
 div#sonic.flip-standing {
     -webkit-transform: scaleX(-1);
@@ -45,24 +46,11 @@ div#sonic {
     bottom: 190px;
     margin: auto;
     background-image: url('../images/sonic_standing.gif');
+    /* background-image: url('../images/sonic_waiting.gif'); */
     background-position: center;
     background-size: cover;
     /* -webkit-transform: scaleX(-1);
     transform: scaleX(-1); */
-}
-
-div#ring {
-    width: 130px;
-    height: 90px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    background-image: url('../images/ring3.gif');
-    background-position: center;
-    background-size: cover;
 }
 
 div#sonic_stand {
@@ -115,4 +103,49 @@ div#sonic_spin {
     background-image: url('../images/sonic_spinning.gif');
     background-position: center;
     background-size: cover;
+}
+
+/* ------------------------------Rings & Barriers-------------------------------- */
+
+div#ring {
+    width: 130px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background-image: url('../images/ring3.gif');
+    background-position: center;
+    background-size: cover;
+}
+
+section#bg-container1>section#bg-container2>div.bg>div.level {
+    border: 2px solid purple;
+    height: 350px;
+
+}
+
+section#bg-container1>section#bg-container2>div.bg>div.level#level1_1 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+section#bg-container1>section#bg-container2>div.bg>div.level#level1_1>div#jump_pad1 {
+    border: 5px solid rgb(183, 38, 219);
+    position: absolute;
+    /* top: 0; */
+    width: 490px;
+    height: 135px;
+    background-image: url("../images/jump_pads/jump_pad1.png");
+    background-size: cover;
+    background-position: center;
+}
+
+section#bg-container1>section#bg-container2>div.bg>div.level#level1_2>div#jump_pad2 {
+    border: 5px solid rgb(183, 38, 219);
+    width: 200px;
+    height: 150px;
 }

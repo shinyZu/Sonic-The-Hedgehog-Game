@@ -5,10 +5,150 @@
 
 var sonic = $("#sonic");
 var gameStage = $("#bg-container2");
+let stage_count = 0;
+
 var jump_state = false;
 var isFlipped = false;
+var sonic_xPos = 0;
+var sonic_yPos = 0;
 
-$(document).on({
+let jump_pad1 = $("#jump_pad1");
+
+var jumpPad_top;
+var sonic_top;
+
+let jump_pad;
+
+function moveLeft() {
+    sonic.finish().animate({
+        left: "-=10"
+    });
+}
+
+function moveUp() {
+    sonic.finish().animate({
+        // top: "-=10",
+        bottom: "+=30"
+    });
+}
+
+function moveRight() {
+    sonic.finish().animate({
+        left: "+=10"
+    });
+}
+
+function moveUp_Left() {
+    sonic.finish().animate({
+        left: "-=20",
+        bottom: "+=20"
+    });
+}
+
+function moveUp_Right() {
+    sonic.finish().animate({
+        left: "+=20",
+        bottom: "+=20"
+    });
+}
+
+function avoidMove_atLeftEdge() {
+    sonic.animate({
+        left: "0"
+    });
+}
+
+function avoidMove_atTopEdge() {
+    sonic.finish().animate({
+        top: "300",
+        bottom: "800"
+    });
+}
+
+function avoidMove_belowGroundLevel() {
+    sonic.finish().animate({
+        // top: "459.323 ",
+        bottom: "190"
+    });
+}
+
+function moveTo_InitialPosition() {
+    sonic.animate({
+        left: "0"
+    });
+}
+
+function change_Stage() {
+    switch (stage_count) {
+        case 0:
+            gameStage.css("margin-left", "-100%").css("transition", "all 1s ease");
+            console.log(sonic.position().left);
+            moveTo_InitialPosition();
+            stage_count++;
+            break;
+
+        case 1:
+            gameStage.css("margin-left", "-200%").css("transition", "all 1s ease");
+            console.log(sonic.position().left);
+            moveTo_InitialPosition();
+            stage_count++;
+            break;
+
+        case 2:
+            gameStage.css("margin-left", "-300%").css("transition", "all 1s ease");
+            console.log(sonic.position().left);
+            moveTo_InitialPosition();
+            stage_count++;
+            break;
+
+        default:
+            sonic.animate({
+                left: "1280"
+            });
+            break;
+    }
+}
+
+function roll_forward() {
+    sonic.finish().animate({
+        left: "+=20"
+    });
+}
+
+function roll_backward() {
+    sonic.finish().animate({
+        left: "-=20"
+    });
+}
+
+function boost_Left() {
+    if (sonic.position().left <= 0) {
+        avoidMove_atLeftEdge();
+    } else {
+        sonic.finish().animate({
+            left: "-=50"
+        });
+    }
+}
+
+function boost_Right() {
+    if (sonic.position().left >= 1280) {
+        change_Stage();
+    } else {
+        sonic.finish().animate({
+            left: "+=50"
+        });
+    }
+}
+
+function jump_OnSpaceBar() {
+    sonic.finish().animate({
+        bottom: "+=20"
+        // top: "-=20"
+    });
+}
+
+var controller = $(document).on({
     keydown: function (e) {
         switch (e.which) {
 
@@ -17,86 +157,60 @@ $(document).on({
                 if (!jump_state) {
                     sonic.addClass("flip-standing");
                     isFlipped = sonic.hasClass("flip-standing");
-
                     sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
-
-                    sonic.finish().animate({
-                        left: "-=10"
-                    });
+                    moveLeft();
 
                 } else { // up + left
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                    sonic.finish().animate({
-                        left: "-=20",
-                        bottom: "+=20"
-                    });
+                    moveUp_Left();
                 }
 
                 if (sonic.position().left <= 0) {
-                    sonic.animate({
-                        left: "0"
-                    });
+                    avoidMove_atLeftEdge();
                 }
 
                 break;
 
             case 38: // up
                 jump_state = true;
-
                 sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                sonic.finish().animate({
-                    // top: "-=10"
-                    bottom: "+=50"
-                });
+                moveUp();
 
-                // if (sonic.position().top > 0) {
-                //     console.log(sonic.position());
+                // if (sonic.position().top <= 700) {
+                // if (sonic.position().top >= -300) {
                 //     console.log(sonic.position().top);
+                //     avoidMove_atTopEdge();
                 // }
 
                 break;
 
             case 39: // right
 
-                if (!jump_state) {
-
+                if (!jump_state) { // if not jumped at the moment (jump_state = false)
                     sonic.removeClass("flip-standing");
                     isFlipped = sonic.hasClass("flip-standing");
-
                     sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
 
-                    sonic.finish().animate({
-                        left: "+=10"
-                    });
-
-                    // if ($("#sonic").position().left == 1280) {
-                    //     console.log("1280");
-                    //     $("#sonic").css('left', '0px');
-                    //     $("#bg-container2").css("margin-left", "-300%").css("transition", "all 1s ease");
-                    // }
-
-                    if (sonic.css("width") == "350%") {
-                        console.log("400");
-                    }
+                    moveRight();
 
                     if (sonic.position().left >= 1280) {
-                        gameStage.css("margin-left", "-100%").css("transition", "all 1s ease");
-                        sonic.animate({ "left": "0" });
-                        // $("#sonic").css('left', '0px');
-
-                    } else {
-                        // $(this).animate({"right": "-=100px"},"slow");
-                        // $("#bg-container2").css("margin-left", "100%").css("transition", "all 1s ease");
-                        // $("#sonic").animate({ "left": "0" });
-                        // console.log("L");
+                        change_Stage();
                     }
 
-                } else {
+                } else { // up + right
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                    sonic.finish().animate({
-                        left: "+=20",
-                        bottom: "+=20"
-                    });
+                    moveUp_Right();
+
+                    if (sonic.position().top >= -jump_pad1.position().top) {
+                        console.log(sonic.position().top);
+                        sonic_yPos = sonic.position().top;
+                        // jump_state = true;
+
+                        // sonic.finish().animate({
+                        //     top: "-212",
+                        //     // bottom: "800"
+                        // });
+                    }
                 }
 
                 break;
@@ -106,40 +220,31 @@ $(document).on({
                 sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
 
                 if (isFlipped) { // if turn back
-                    sonic.finish().animate({
-                        left: "-=20"
-                    });
+                    roll_backward();
 
                 } else {
-                    sonic.finish().animate({
-                        left: "+=20"
-                    });
+                    roll_forward();
                 }
 
                 break;
 
             case 66: // B
-
                 sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
-
                 if (isFlipped) { // if turn back
-                    sonic.finish().animate({
-                        left: "-=50"
-                    });
+                    boost_Left();
 
                 } else {
-                    sonic.finish().animate({
-                        left: "+=50"
-                    });
+                    boost_Right();
                 }
                 break;
 
             case 32: // space bar --> to jump at same position
                 sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                sonic.finish().animate({
-                    bottom: "+=50"
-                    // top: "-=20"
-                });
+                jump_OnSpaceBar();
+                if (sonic.position().top >= -300) {
+                    console.log(sonic.position().top);
+                    avoidMove_atTopEdge();
+                }
                 break;
 
             default:
@@ -149,12 +254,18 @@ $(document).on({
 
     keyup: function (e) {
 
-        if (e.which == 38) { // when up key is released prevent from going down from the ground level
-            sonic.finish().animate({
-                // top: "459.323 "
-                bottom: "190"
-                // bottom: "-=20"
-            });
+        if (e.which == 38 || e.which == 32 || e.which == 39 || e.which == 37) { // when up key is released prevent from going down from the ground level
+            avoidMove_belowGroundLevel();
+        }
+
+        if (e.which == 39 && sonic.position().top >= -jump_pad1.position().top) {
+            console.log(sonic.position().top);
+
+            // sonic.finish().animate({
+            //     // top: -jump_pad1.position().top
+            //     top: "-212"
+            // });
+
         }
         sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
         jump_state = false;
@@ -162,5 +273,9 @@ $(document).on({
     }
 });
 
-
-
+$(document).keydown(function (e) {
+    if (e.which == 65) {
+        console.log("A");
+        $("#sonic").prependTo($("#jump_pad1"));
+    }
+});
