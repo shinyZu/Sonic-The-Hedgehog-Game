@@ -7,6 +7,8 @@ let ring1 = $("#ring1");
 let ring2 = $("#ring2");
 let ring3 = $("#ring3");
 let ring4 = $("#ring4");
+let ring5 = $("#ring5");
+let ring6 = $("#ring6");
 
 var gameStage = $("#bg-container2");
 let stage_count = 0;
@@ -27,25 +29,20 @@ let ring_array = [];
 let ring_widthInfo = [];
 let ring_heightInfo = [];
 
+var active_ring;
+
 function fill_ringArray() {
     for (let i = 0; i < rings.length; i++) {
         ring_array[i] = $(rings[i]);
         console.log(ring_array[i]);
     }
+
+    ring_array[2].removeClass("ring_top");
+    ring_array[2].addClass("alt_ring_top");
+
+    // getAllNonCollectedRings();
 }
-
-// function cal_ring_Width_Height() {
-//     for (let i in ring_array) {
-//         ring_widthInfo[i] = ring_array[i].outerWidth();
-//         ring_heightInfo[i] = ring_array[i].outerHeight();
-//     }
-
-//     console.log(ring_widthInfo);
-//     console.log(ring_heightInfo);
-// }
-
 fill_ringArray();
-// cal_ring_Width_Height();
 
 let css_left;
 let css_top;
@@ -145,40 +142,95 @@ function moveTo_InitialPosition() {
 
 function showRings() {
     for (let i in ring_array) {
-        ring_array[i].css("display", "block");
+        ring_array[i].css("display", "block").css("transition", "all 1s ease");
+        alt_rings();
     }
 }
+
+function hideRings() {
+    for (let i in ring_array) {
+        ring_array[i].css("display", "none");
+    }
+}
+
+function remove_altRing_class() {
+    for (let i in ring_array) {
+        ring_array[i].removeClass(".alt_ring");
+    }
+}
+
+function alt_rings() {
+    switch (stage_count) {
+        case 0:
+            console.log("stage count is 0 : " + stage_count);
+            ring_array[2].removeClass("ring_top");
+            ring_array[2].addClass("alt_ring_top");
+            break;
+
+        case 1:
+            console.log("stage count is 1 : " + stage_count);
+            ring_array[3].removeClass("ring_top");
+            ring_array[3].addClass("alt_ring_top");
+            break;
+
+        case 2:
+            console.log("stage count is 2 : " + stage_count);
+            ring_array[4].removeClass("ring_top");
+            ring_array[4].addClass("alt_ring_top");
+            break;
+
+        case 3:
+            console.log("stage count is 3 : " + stage_count);
+            ring_array[1].removeClass("ring_top");
+            ring_array[1].addClass("alt_ring_top");
+            break;
+
+        default:
+            break;
+    }
+}
+
+// let non_collected_rings = [];
+
+// function getAllNonCollectedRings() {
+//     for (let i in ring_array) {
+//         if ($(ring_array[i]).css("display") == "block") {
+//             non_collected_rings[0] = ring_array[i];
+//         }
+//     }
+//     console.log(non_collected_rings);
+// }
 
 function change_Stage() {
     switch (stage_count) {
         case 0:
             gameStage.css("margin-left", "-100%").css("transition", "all 1s ease");
-            console.log(sonic.position().left);
             moveTo_InitialPosition();
+            setTimeout(showRings, 800);
             stage_count++;
             break;
 
         case 1:
             gameStage.css("margin-left", "-200%").css("transition", "all 1s ease");
-            console.log(sonic.position().left);
             moveTo_InitialPosition();
+            setTimeout(showRings, 800);
             stage_count++;
             break;
 
         case 2:
             gameStage.css("margin-left", "-300%").css("transition", "all 1s ease");
-            console.log(sonic.position().left);
             moveTo_InitialPosition();
             stage_count++;
+            setTimeout(showRings(1), 800);
             break;
 
         default:
             sonic.animate({
                 left: "1410"
             });
+            // hideRings();
             break;
     }
-    showRings();
 }
 
 function roll_forward() {
@@ -351,30 +403,38 @@ $(document).on({
 
 
         var ring_collision;
-        var active_ring;
+
 
         L1: for (let i in ring_array) {
-            switch (i) {
-                case 0:
-                    active_ring = ring_array[0];
-                    break;
+            active_ring = ring_array[i]
 
-                case 1:
-                    active_ring = ring_array[1];
-                    break;
+            // switch (i) {
+            //     case 0:
+            //         active_ring = ring_array[0];
+            //         console.log(active_ring);
+            //         break;
 
-                case 2:
-                    active_ring = ring_array[2];
-                    break;
+            //     case 1:
+            //         active_ring = ring_array[1];
+            //         console.log(active_ring);
+            //         break;
 
-                case 3:
-                    active_ring = ring_array[3];
-                    break;
+            //     case 2:
+            //         active_ring = ring_array[2];
+            //         console.log(active_ring);
+            //         break;
 
-                default:
-                    active_ring = ring_array[i];
-                    break;
-            }
+            //     case 3:
+            //         active_ring = ring_array[3];
+            //         console.log(active_ring);
+            //         break;
+
+            //     default:
+            //         active_ring = ring_array[i];
+            //         // active_ring = ring6;
+            //         console.log(active_ring);
+            //         break;
+            // }
 
             ring_collision = {
                 x: active_ring[0].offsetLeft - active_ring.scrollLeft(),
@@ -388,20 +448,18 @@ $(document).on({
                 sonic_collision.y > ring_collision.y + ring_collision.height ||
                 sonic_collision.y + sonic_collision.height < ring_collision.y) {
 
-                console.log("NO Collision Detected");
+                // console.log("NO Collision Detected");
                 // sonic.css("background-color", "blue");
                 // active_ring.css("background-color", "red");
 
             } else {
-                console.log("Collision Detected");
+                // console.log("Collision Detected");
                 active_ring.css("display", "none");
                 // sonic.css("background-color", "black");
                 // active_ring.css("background-color", "black");
             }
+
         }
-
-
-
     },
 
     keyup: function (e) {

@@ -165,19 +165,26 @@ div.ring {
     transform: translate(-50%, -50%);
 }
 
+.alt_ring_top {
+    top: 48%;
+}
+
+.ring_top {
+    top: 73%
+}
 
 div#ring1 {
-    top: 73%;
+    /* top: 73%; */
     left: 20%;
 }
 
 div#ring2 {
-    top: 73%;
+    /* top: 73%; */
     left: 35%;
 }
 
 div#ring3 {
-    top: 48%;
+    /* top: 73%; */
     left: 50%;
 }
 
@@ -187,9 +194,10 @@ div#ring4 {
 }
 
 div#ring5 {
-    top: 73%;
+    /* top: 73%; */
     left: 80%;
 }
+
 
 section#bg-container1>section#bg-container2>div.bg>div.level {
     /* border: 2px solid purple; */
