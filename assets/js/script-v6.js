@@ -1,7 +1,13 @@
 // hope to be the final 
 
 let sonic = $("#sonic");
-let ring = $("#ring");
+
+let rings = $(".ring");
+let ring1 = $("#ring1");
+let ring2 = $("#ring2");
+let ring3 = $("#ring3");
+let ring4 = $("#ring4");
+
 var gameStage = $("#bg-container2");
 let stage_count = 0;
 
@@ -14,8 +20,32 @@ let ring_collider;
 let sonic_width = sonic.outerWidth();
 let sonic_height = sonic.outerHeight();
 
-let ring_width = ring.outerWidth();
-let ring_height = ring.outerHeight();
+let ring_width = ring1.outerWidth();
+let ring_height = ring1.outerHeight();
+
+let ring_array = [];
+let ring_widthInfo = [];
+let ring_heightInfo = [];
+
+function fill_ringArray() {
+    for (let i = 0; i < rings.length; i++) {
+        ring_array[i] = $(rings[i]);
+        console.log(ring_array[i]);
+    }
+}
+
+// function cal_ring_Width_Height() {
+//     for (let i in ring_array) {
+//         ring_widthInfo[i] = ring_array[i].outerWidth();
+//         ring_heightInfo[i] = ring_array[i].outerHeight();
+//     }
+
+//     console.log(ring_widthInfo);
+//     console.log(ring_heightInfo);
+// }
+
+fill_ringArray();
+// cal_ring_Width_Height();
 
 let css_left;
 let css_top;
@@ -69,8 +99,8 @@ function moveUp_Left() {
     }
 
     sonic.finish().animate({
-        left: "-=20",
-        bottom: "+=20"
+        top: "-=20",
+        left: "-=20"
     });
 }
 
@@ -83,9 +113,10 @@ function moveUp_Right() {
     }
 
     sonic.finish().animate({
-        left: "+=20",
-        bottom: "+=20"
+        top: "-=10",
+        left: "+=20"
     });
+
 }
 
 function avoidMove_atLeftEdge() {
@@ -110,6 +141,12 @@ function moveTo_InitialPosition() {
     sonic.animate({
         left: "6%"
     });
+}
+
+function showRings() {
+    for (let i in ring_array) {
+        ring_array[i].css("display", "block");
+    }
 }
 
 function change_Stage() {
@@ -141,6 +178,7 @@ function change_Stage() {
             });
             break;
     }
+    showRings();
 }
 
 function roll_forward() {
@@ -290,12 +328,10 @@ $(document).on({
 
         var x_pos;
 
-        if (!isFlipped) {
-            // console.log("moved to right");
+        if (!isFlipped) { // if moving to right
             x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 591 - 721;
 
-        } else {
-            // console.log("moved to left");
+        } else { // if moving to left
             x_pos = sonic[0].offsetLeft - sonic.scrollLeft() + 80;// 571 - 706
         }
 
@@ -306,28 +342,66 @@ $(document).on({
             height: sonic_height
         };
 
-        ring_collision = {
-            x: ring[0].offsetLeft - ring.scrollLeft(),
-            y: ring[0].offsetTop - ring.scrollTop(),
-            width: ring_width,
-            height: ring_height
-        };
+        // ring_collision = {
+        //     x: ring1[0].offsetLeft - ring1.scrollLeft(),
+        //     y: ring1[0].offsetTop - ring1.scrollTop(),
+        //     width: ring_width,
+        //     height: ring_height
+        // };
 
-        if (sonic_collision.x > ring_collision.x + ring_width ||
-            sonic_collision.x + sonic_width < ring_collision.x ||
-            sonic_collision.y > ring_collision.y + ring_collision.height ||
-            sonic_collision.y + sonic_collision.height < ring_collision.y) {
 
-            console.log("NO Collision Detected");
-            // sonic.css("background-color", "blue");
-            // ring.css("background-color", "red");
+        var ring_collision;
+        var active_ring;
 
-        } else {
-            console.log("Collision Detected");
-            ring.css("display", "none");
-            // sonic.css("background-color", "black");
-            // ring.css("background-color", "black");
+        L1: for (let i in ring_array) {
+            switch (i) {
+                case 0:
+                    active_ring = ring_array[0];
+                    break;
+
+                case 1:
+                    active_ring = ring_array[1];
+                    break;
+
+                case 2:
+                    active_ring = ring_array[2];
+                    break;
+
+                case 3:
+                    active_ring = ring_array[3];
+                    break;
+
+                default:
+                    active_ring = ring_array[i];
+                    break;
+            }
+
+            ring_collision = {
+                x: active_ring[0].offsetLeft - active_ring.scrollLeft(),
+                y: active_ring[0].offsetTop - active_ring.scrollTop(),
+                width: ring_width,
+                height: ring_height
+            };
+
+            if (sonic_collision.x > ring_collision.x + ring_width ||
+                sonic_collision.x + sonic_width < ring_collision.x ||
+                sonic_collision.y > ring_collision.y + ring_collision.height ||
+                sonic_collision.y + sonic_collision.height < ring_collision.y) {
+
+                console.log("NO Collision Detected");
+                // sonic.css("background-color", "blue");
+                // active_ring.css("background-color", "red");
+
+            } else {
+                console.log("Collision Detected");
+                active_ring.css("display", "none");
+                // sonic.css("background-color", "black");
+                // active_ring.css("background-color", "black");
+            }
         }
+
+
+
     },
 
     keyup: function (e) {

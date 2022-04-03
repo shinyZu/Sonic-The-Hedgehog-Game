@@ -142,17 +142,53 @@ div#sonic_spin {
     background-size: cover;
 } */
 
-div#ring {
-    width: 130px;
-    height: 130px;
+/* .ring-container {
+    border: 2px solid chocolate;
+    width: 50%;
+    height: 300px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 73%;
+    left: 50%;
+    display: flex;
+    justify-content: space-evenly;
+} */
+
+div.ring {
+    width: 100px;
+    height: 100px;
     border: 2px solid red;
     background-image: url('../images/ring3.gif');
     background-position: center;
     background-size: cover;
     position: absolute;
     transform: translate(-50%, -50%);
+}
+
+
+div#ring1 {
     top: 73%;
+    left: 20%;
+}
+
+div#ring2 {
+    top: 73%;
+    left: 35%;
+}
+
+div#ring3 {
+    top: 48%;
     left: 50%;
+}
+
+div#ring4 {
+    top: 73%;
+    left: 65%;
+}
+
+div#ring5 {
+    top: 73%;
+    left: 80%;
 }
 
 section#bg-container1>section#bg-container2>div.bg>div.level {
