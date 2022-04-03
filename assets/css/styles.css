@@ -1,19 +1,21 @@
 section#bg-container1 {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     overflow: hidden;
 
 }
 
 section#bg-container1>section#bg-container2 {
-    border: 2px solid green;
+    /* border: 2px solid green; */
     display: flex;
     height: 100vh;
     width: 400%;
+    /* position: absolute; */
 }
 
 section#bg-container1>section#bg-container2>div.bg {
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     width: 100%;
+
     /* display: flex; */
     background-image: url('../images/bg.jpg');
     background-size: cover;
@@ -24,7 +26,7 @@ section#bg-container1>section#bg-container2>div.bg {
 
 div#sonic.flip-standing {
     -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+    transform: scaleX(-1) translate(50%, -50%);
 }
 
 /* .initial_position{
@@ -36,22 +38,38 @@ div#sonic.flip-standing {
 } */
 
 div#sonic {
-    /* width: 238px; */
-    width: 180px;
+    /* width: 180px;
     height: 250px;
     position: absolute;
-    /* top: 500px; */
     top: 65%;
-    /* top: 0; */
     left: 0;
     bottom: 190px;
     margin: auto;
     background-image: url('../images/sonic_standing.gif');
-    /* background-image: url('../images/sonic_waiting.gif'); */
     background-position: center;
-    background-size: cover;
+    background-size: cover; */
+
+    /* width: 238px; */
+    /* top: 500px; */
+    /* top: 0; */
+    /* background-image: url('../images/sonic_waiting.gif'); */
     /* -webkit-transform: scaleX(-1);
     transform: scaleX(-1); */
+    /* z-index: 1; */
+}
+
+div#sonic {
+    width: 180px;
+    height: 250px;
+    border: 2px solid blue;
+    background-image: url('../images/sonic_standing.gif');
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 72%;
+    left: 6%;
+    /* z-index: 1; */
 }
 
 div#sonic_stand {
@@ -109,11 +127,12 @@ div#sonic_spin {
 
 /* ------------------------------Rings & Barriers-------------------------------- */
 
-div#ring {
+/* div#ring {
     width: 130px;
     height: 90px;
+    border: 2px solid red;
     position: absolute;
-    top: 0;
+    top: 170px;
     left: 0;
     bottom: 0;
     right: 0;
@@ -121,10 +140,23 @@ div#ring {
     background-image: url('../images/ring3.gif');
     background-position: center;
     background-size: cover;
+} */
+
+div#ring {
+    width: 130px;
+    height: 130px;
+    border: 2px solid red;
+    background-image: url('../images/ring3.gif');
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 73%;
+    left: 50%;
 }
 
 section#bg-container1>section#bg-container2>div.bg>div.level {
-    border: 2px solid purple;
+    /* border: 2px solid purple; */
     height: 350px;
 
 }
@@ -136,7 +168,7 @@ section#bg-container1>section#bg-container2>div.bg>div.level#level1_1 {
 }
 
 section#bg-container1>section#bg-container2>div.bg>div.level#level1_1>div#jump_pad1 {
-    border: 5px solid rgb(183, 38, 219);
+    /* border: 5px solid rgb(183, 38, 219); */
     position: absolute;
     /* top: 0; */
     width: 490px;
@@ -147,7 +179,7 @@ section#bg-container1>section#bg-container2>div.bg>div.level#level1_1>div#jump_p
 }
 
 section#bg-container1>section#bg-container2>div.bg>div.level#level1_2>div#jump_pad2 {
-    border: 5px solid rgb(183, 38, 219);
+    /* border: 5px solid rgb(183, 38, 219); */
     width: 200px;
     height: 150px;
 }

@@ -1,27 +1,32 @@
-// function stop() {
-//     console.log("stopped");
-//     $("#sonic").css("background-image", "url('../assets/images/sonic_standing.gif')");
-// }
+// hope to be the final 
 
-var sonic = $("#sonic");
+let sonic = $("#sonic");
+let ring = $("#ring");
 var gameStage = $("#bg-container2");
 let stage_count = 0;
 
-var jump_state = false;
-var isFlipped = false;
-var sonic_xPos = 0;
-var sonic_yPos = 0;
+let sonic_startPosX;
+let sonic_startPosY;
 
-// let jump_pad = $("#jump_pad1");
-var ring = $("#ring");
+let sonic_collider;
+let ring_collider;
 
-var jumpPad_top;
-var sonic_top;
+let sonic_width = sonic.outerWidth();
+let sonic_height = sonic.outerHeight();
 
-// ring.position().left = 1000;
+let ring_width = ring.outerWidth();
+let ring_height = ring.outerHeight();
+
+let css_left;
+let css_top;
+
+let jump_state = false;
+let isFlipped = false;
 
 function moveLeft() {
-    if (sonic.position().left <= 0) {
+    sonic_startPosX = sonic[0].offsetLeft;
+
+    if (sonic_startPosX <= 90) {
         avoidMove_atLeftEdge();
     }
 
@@ -31,41 +36,34 @@ function moveLeft() {
 }
 
 function moveUp() {
+    sonic_startPosY = sonic[0].offsetTop;
+
+    if (sonic_startPosY <= 91) {
+        console.log(sonic[0].offsetLeft);
+        avoidMove_atTopEdge();
+    }
+
     sonic.finish().animate({
-        // top: "-=10",
-        bottom: "+=30"
+        top: "-=30"
     });
 }
 
 function moveRight() {
-    if (sonic.position().left >= 1280) {
+    sonic_startPosX = sonic[0].offsetLeft;
+
+    if (sonic_startPosX >= 1410) {
         change_Stage();
     }
 
     sonic.finish().animate({
         left: "+=10"
     });
-
-
-    var sonic_offset = sonic.offset();
-    var sonic_top = sonic_offset.top;
-    var sonic_left = sonic_offset.left;
-
-    var ring_offset = ring.offset();
-    var ring_top = ring_offset.top;
-    var ring_left = ring_offset.left;
-
-    // if (sonic.position().left == 685.55) {
-    //     console.log("grab2");
-    //     // ring.hide();
-    // }
-    if (sonic.offset({ top: 363.3333435058594, left: 685.5556030273438 })) {
-        console.log(3);
-    }
-
 }
 
 function moveUp_Left() {
+    sonic_startPosY = sonic[0].offsetTop;
+    sonic_startPosX = sonic[0].offsetLeft;
+
     if (sonic.position().left <= 0) {
         avoidMove_atLeftEdge();
     }
@@ -77,7 +75,10 @@ function moveUp_Left() {
 }
 
 function moveUp_Right() {
-    if (sonic.position().left >= 1280) {
+    sonic_startPosY = sonic[0].offsetTop;
+    sonic_startPosX = sonic[0].offsetLeft;
+
+    if (sonic[0].offsetLeft >= 1410) {
         change_Stage();
     }
 
@@ -89,27 +90,25 @@ function moveUp_Right() {
 
 function avoidMove_atLeftEdge() {
     sonic.animate({
-        left: "0"
+        left: "6%"
     });
 }
 
 function avoidMove_atTopEdge() {
     sonic.finish().animate({
-        top: "300",
-        bottom: "800"
+        top: "13%"
     });
 }
 
 function avoidMove_belowGroundLevel() {
     sonic.finish().animate({
-        top: "459.323 ",
-        bottom: "190"
+        top: "72%"
     });
 }
 
 function moveTo_InitialPosition() {
     sonic.animate({
-        left: "0"
+        left: "6%"
     });
 }
 
@@ -138,14 +137,16 @@ function change_Stage() {
 
         default:
             sonic.animate({
-                left: "1280"
+                left: "1410"
             });
             break;
     }
 }
 
 function roll_forward() {
-    if (sonic.position().left >= 1280) {
+    sonic_startPosX = sonic[0].offsetLeft;
+
+    if (sonic[0].offsetLeft >= 1410) {
         change_Stage();
     }
 
@@ -155,6 +156,8 @@ function roll_forward() {
 }
 
 function roll_backward() {
+    sonic_startPosX = sonic[0].offsetLeft;
+
     if (sonic.position().left <= 0) {
         avoidMove_atLeftEdge();
 
@@ -166,50 +169,61 @@ function roll_backward() {
 }
 
 function boost_Left() {
+    sonic_startPosX = sonic[0].offsetLeft;
+
     if (sonic.position().left <= 0) {
         avoidMove_atLeftEdge();
 
     } else {
-        sonic.finish().animate({
-            left: "-=50"
-        });
+        // sonic.finish().animate({
+        //     left: "-=50"
+        // });
+        sonic.css("left", sonic_startPosX - 30);
     }
 }
 
 function boost_Right() {
-    if (sonic.position().left >= 1280) {
+    sonic_startPosX = sonic[0].offsetLeft;
+
+    if (sonic_startPosX >= 1410) {
         change_Stage();
     }
 
-    sonic.finish().animate({
-        left: "+=50"
-    });
+    // sonic.finish().animate({
+    //     left: "+=50"
+    // });
+    sonic.css("left", sonic_startPosX + 30);
 
 
 }
 
 function jump_OnSpaceBar() {
-    if (sonic.position().top >= -300) {
-        console.log(sonic.position().top);
+    sonic_startPosY = sonic[0].offsetTop;
+
+    if (sonic[0].offsetLeft >= 0) {
+        console.log(sonic[0].offsetLeft);
         avoidMove_atTopEdge();
     }
 
     sonic.finish().animate({
         bottom: "+=20"
-        // top: "-=20"
     });
 }
 
-var controller = $(document).on({
+var lastPosition = 0;
+
+$(document).on({
     keydown: function (e) {
         switch (e.which) {
 
             case 37: // left
 
                 if (!jump_state) {
+
                     sonic.addClass("flip-standing");
                     isFlipped = sonic.hasClass("flip-standing");
                     sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+
                     moveLeft();
 
                 } else { // up + left
@@ -222,14 +236,8 @@ var controller = $(document).on({
             case 38: // up
                 jump_state = true;
                 sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+
                 moveUp();
-
-                // if (sonic.position().top <= 700) {
-                // if (sonic.position().top >= -300) {
-                //     console.log(sonic.position().top);
-                //     avoidMove_atTopEdge();
-                // }
-
                 break;
 
             case 39: // right
@@ -237,31 +245,20 @@ var controller = $(document).on({
                 if (!jump_state) { // if not jumped at the moment (jump_state = false)
                     sonic.removeClass("flip-standing");
                     isFlipped = sonic.hasClass("flip-standing");
-                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
 
+                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
                     moveRight();
 
                 } else { // up + right
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
                     moveUp_Right();
-
-                    // if (sonic.position().top >= -jump_pad.position().top) {
-                    //     console.log(sonic.position().top);
-                    //     sonic_yPos = sonic.position().top;
-                    //     // jump_state = true;
-
-                    //     // sonic.finish().animate({
-                    //     //     top: "-212",
-                    //     //     // bottom: "800"
-                    //     // });
-                    // }
                 }
 
                 break;
 
             case 40: // down
-
                 sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                sonic_startPosY = sonic[0].offsetTop;
 
                 if (isFlipped) { // if turn back
                     roll_backward();
@@ -290,6 +287,47 @@ var controller = $(document).on({
             default:
                 break;
         }
+
+        var x_pos;
+
+        if (!isFlipped) {
+            // console.log("moved to right");
+            x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 591 - 721;
+
+        } else {
+            // console.log("moved to left");
+            x_pos = sonic[0].offsetLeft - sonic.scrollLeft() + 80;// 571 - 706
+        }
+
+        sonic_collision = {
+            x: x_pos,
+            y: sonic[0].offsetTop - sonic.scrollTop(),
+            width: sonic_width,
+            height: sonic_height
+        };
+
+        ring_collision = {
+            x: ring[0].offsetLeft - ring.scrollLeft(),
+            y: ring[0].offsetTop - ring.scrollTop(),
+            width: ring_width,
+            height: ring_height
+        };
+
+        if (sonic_collision.x > ring_collision.x + ring_width ||
+            sonic_collision.x + sonic_width < ring_collision.x ||
+            sonic_collision.y > ring_collision.y + ring_collision.height ||
+            sonic_collision.y + sonic_collision.height < ring_collision.y) {
+
+            console.log("NO Collision Detected");
+            // sonic.css("background-color", "blue");
+            // ring.css("background-color", "red");
+
+        } else {
+            console.log("Collision Detected");
+            ring.css("display", "none");
+            // sonic.css("background-color", "black");
+            // ring.css("background-color", "black");
+        }
     },
 
     keyup: function (e) {
@@ -298,24 +336,8 @@ var controller = $(document).on({
             avoidMove_belowGroundLevel();
         }
 
-        // if (e.which == 39 && sonic.position().top >= -jump_pad.position().top) {
-        //     console.log(sonic.position().top);
-
-        //     // sonic.finish().animate({
-        //     //     // top: -jump_pad1.position().top
-        //     //     top: "-212"
-        //     // });
-        // }
-
         sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
         jump_state = false;
 
-    }
-});
-
-$(document).keydown(function (e) {
-    if (e.which == 65) {
-        console.log("A");
-        $("#sonic").prependTo($("#jump_pad1"));
     }
 });
