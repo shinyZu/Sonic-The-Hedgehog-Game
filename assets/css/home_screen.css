@@ -72,7 +72,7 @@ section#home-bg div#title-img {
     /* margin: 509px 0 0 7px; */
     /* -webkit-animation: spin 4s linear infinite;
     -moz-animation: spin 4s linear infinite; */
-    /* animation: spin 4s linear; */
+    animation: spin 4s linear;
     /* transition: top 2s ease; */
 }
 

@@ -89,6 +89,7 @@ function moveUp() {
     sonic.finish().animate({
         top: "-=30"
     });
+
     // sonic.css("top", sonic_startPosY - 10);
 
 }
@@ -329,6 +330,7 @@ let ring_collision;
 let jump_pad_collision;
 let barrier1_collision;
 var x_pos;
+var y_pos;
 
 let audio1 = new Audio();
 audio1.src = "../assets/audio/BridgeZone.mp3";
@@ -437,90 +439,40 @@ function check_jumpPad_collision() {
     }
 }
 
-function check_barrier_collision(barrier, event) {
+var barrier_boundingRect = barrier1[0].getBoundingClientRect();
+
+function isWithinBarrierRange() {
     if (!isFlipped) { // if moving to right
-        x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 551 - 421
+
+        if ((sonic[0].offsetLeft + 1440) > barrier_boundingRect.left - 120 && (sonic[0].offsetLeft + 1440) < barrier_boundingRect.right - 40
+            && sonic[0].offsetTop > 430) {
+
+            return true;
+
+        } else {
+            return false;
+        }
 
     } else { // if moving to left
-        x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - (70 + 50) / 2;// 1021 - 951
+        if ((sonic[0].offsetLeft + 1440) < barrier_boundingRect.right - 40 && (sonic[0].offsetLeft + 1440) > barrier_boundingRect.left - 130
+            && sonic[0].offsetTop > 430) {
+
+            return true;
+
+        } else {
+            return false;
+        }
     }
+}
 
-    sonic_collision = {
-        x: x_pos,
-        // x: x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130,
-        y: sonic[0].offsetTop - sonic.scrollTop() - 170, // 459 - 289
-        width: sonic_width,
-        height: sonic_height
-    };
+function check_barrier_collision() {
+    if (isWithinBarrierRange()) {
+        audio1.pause();
+        audio3.play();
 
-    switch (barrier) {
-        case barrier1:
+        sonic.addClass("animate_onBarrier");
+        setTimeout(restartGame, 2000);
 
-            barrier1_collision = {
-                x: barrier1[0].offsetLeft - barrier1.scrollLeft(),
-                y: barrier1[0].offsetTop - barrier1.scrollTop(),
-                width: barrier1.outerWidth(),
-                height: barrier1.outerHeight()
-            }
-
-            if (sonic_collision.x > barrier1_collision.x + barrier1_collision.width ||
-                sonic_collision.x + sonic_width < barrier1_collision.x ||
-                sonic_collision.y > barrier1_collision.y + barrier1_collision.height ||
-                sonic_collision.y + sonic_collision.height < barrier1_collision.y) {
-
-                // console.log("NO Collision Detected");
-                // sonic.css("background-color", "blue");
-                // barrier1.css("background-color", "red");
-
-            } else {
-                // console.log("Collision Detected");
-                // barrier1.css("display", "none");
-                // sonic.css("background-color", "black");
-                // barrier1.css("background-color", "black");
-                event.preventDefault();
-                audio1.pause();
-                audio3.play();
-
-
-
-                sonic.addClass("animate_onBarrier");
-                setTimeout(restartGame, 2000);
-            }
-            break;
-
-        case barrier2:
-            barrier2_collision = {
-                x: barrier2[0].offsetLeft - barrier2.scrollLeft(),
-                y: barrier2[0].offsetTop - barrier2.scrollTop(),
-                width: barrier2.outerWidth(),
-                height: barrier2.outerHeight()
-            }
-
-            if (sonic_collision.x > barrier2_collision.x + barrier2_collision.width ||
-                sonic_collision.x + sonic_width < barrier2_collision.x ||
-                sonic_collision.y > barrier2_collision.y + barrier2_collision.height ||
-                sonic_collision.y + sonic_collision.height < barrier2_collision.y) {
-
-                // console.log("NO Collision Detected");
-                // sonic.css("background-color", "blue");
-                // barrier2.css("background-color", "red");
-
-            } else {
-                // console.log("Collision Detected");
-                // barrier1.css("display", "none");
-                // sonic.css("background-color", "black");
-                // barrier2.css("background-color", "black");
-
-                audio1.pause();
-                audio3.play();
-                sonic.addClass("animate_onBarrier");
-                setTimeout(restartGame, 2000);
-            }
-            break;
-
-        default:
-            console.log("default barriers");
-            break;
     }
 }
 
@@ -531,6 +483,7 @@ $(document).on({
         switch (e.which) {
 
             case 37: // left
+                sonic.removeClass("animate_onBarrier");
 
                 if (!jump_state) {
 
@@ -555,6 +508,7 @@ $(document).on({
                 break;
 
             case 39: // right
+                sonic.removeClass("animate_onBarrier");
 
                 if (!jump_state) { // if not jumped at the moment (jump_state = false)
                     sonic.removeClass("flip-standing");
@@ -580,10 +534,6 @@ $(document).on({
                 } else {
                     roll_forward();
                 }
-
-                // sonic.animate({
-                //     top: "+=10"
-                // });
 
                 // sonic.css("top", sonic_startPosY + 10);
 
@@ -633,6 +583,7 @@ $(document).on({
         if (e.which == 38 || e.which == 32 || e.which == 39 || e.which == 37) { // when up key is released prevent from going down from the ground level
             // if (e.which == 38 || e.which == 32) { // when up key is released prevent from going down from the ground level
             avoidMove_belowGroundLevel();
+
         }
 
         sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");

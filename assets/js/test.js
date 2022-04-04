@@ -127,6 +127,7 @@
 
 /* -----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+
 // if (sonic.hasClass("flip-standing")) { // if turn back
 //     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
 //     sonic.finish().animate({
@@ -141,3 +142,174 @@
 //         left: "+=20"
 //     });
 // }
+
+
+/* --------------------------------------------------------Checking Barrier Collision-----------------------------------------------------------------------------------------*/
+
+
+var barrier1_boundingRect = barrier1[0].getBoundingClientRect();
+var barrier2_boundingRect = barrier2[0].getBoundingClientRect();
+
+function isWithinBarrierRange() {
+    if (!isFlipped) { // if moving to right
+
+        if ((sonic[0].offsetLeft + 1440) > barrier1_boundingRect.left - 120 && (sonic[0].offsetLeft + 1440) < barrier1_boundingRect.right - 40
+            && sonic[0].offsetTop > 430) {
+
+            // console.log("inside1");
+            // console.log("offsetLeft : " + (sonic[0].offsetLeft + 1440));
+            // console.log("offsetTop : " + (sonic[0].offsetTop));
+            // console.log("left : " + (barrier1_boundingRect.left - 130));
+            // console.log("right : " + (barrier1_boundingRect.right - 40));
+
+            // sonic.css("background-color", "black");
+            // barrier1.css("background-color", "black");
+            // barrier2.css("background-color", "black");
+
+            audio1.pause();
+            audio3.play();
+
+            sonic.addClass("animate_onBarrier");
+            setTimeout(restartGame, 2000);
+
+            return true;
+        } else {
+
+            // console.log("outside1");
+            // console.log("offsetLeft : " + (sonic[0].offsetLeft + 1440));
+            // console.log("offsetTop : " + (sonic[0].offsetTop));
+            // console.log("left : " + (barrier1_boundingRect.left - 130));
+            // console.log("right : " + (barrier1_boundingRect.right - 40));
+
+            // sonic.css("background-color", "blue");
+            // barrier1.css("background-color", "red");
+            // barrier2.css("background-color", "red");
+
+            return false;
+        }
+
+    } else { // if moving to left
+        if ((sonic[0].offsetLeft + 1440) < barrier1_boundingRect.right - 40 && (sonic[0].offsetLeft + 1440) > barrier1_boundingRect.left - 130
+            && sonic[0].offsetTop > 430) {
+
+            // console.log("inside2");
+            // console.log("offsetLeft : " + (sonic[0].offsetLeft + 1440));
+            // console.log("right : " + (barrier1_boundingRect.right - 40));
+            // console.log("left : " + (barrier1_boundingRect.left - 130));
+
+            // sonic.css("background-color", "black");
+            // barrier1.css("background-color", "black");
+            // barrier2.css("background-color", "black");
+
+            audio1.pause();
+            audio3.play();
+
+            sonic.addClass("animate_onBarrier");
+            setTimeout(restartGame, 2000);
+
+
+            return true;
+        } else {
+
+            // console.log("outside2");
+            // console.log("offsetLeft : " + (sonic[0].offsetLeft + 1440));
+            // console.log("right : " + (barrier1_boundingRect.right - 40));
+            // console.log("left : " + (barrier1_boundingRect.left - 130));
+
+            // sonic.css("background-color", "blue");
+            // barrier1.css("background-color", "red");
+            // barrier2.css("background-color", "red");
+
+            return false;
+
+        }
+    }
+}
+
+function check_barrier_collision(barrier, event) {
+    // if (!isFlipped) { // if moving to right
+    //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 551 - 421
+
+    // } else { // if moving to left
+    //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - (70 + 50) / 2;// 1021 - 951
+    // }
+
+    // sonic_collision = {
+    //     x: x_pos,
+    //     y: sonic[0].offsetTop - sonic.scrollTop() - 170, // 459 - 289
+    //     width: sonic_width,
+    //     height: sonic_height
+    // };
+
+    isWithinBarrierRange();
+
+    // switch (barrier) {
+    //     case barrier1:
+
+    //         barrier1_collision = {
+    //             x: barrier1[0].offsetLeft - barrier1.scrollLeft(),
+    //             y: barrier1[0].offsetTop - barrier1.scrollTop(),
+    //             width: barrier1.outerWidth(),
+    //             height: barrier1.outerHeight()
+    //         }
+
+    //         if (sonic_collision.x > barrier1_collision.x + barrier1_collision.width ||
+    //             sonic_collision.x + sonic_width < barrier1_collision.x ||
+    //             sonic_collision.y > barrier1_collision.y + barrier1_collision.height ||
+    //             sonic_collision.y + sonic_collision.height < barrier1_collision.y) {
+
+    //             // console.log("NO Collision Detected");
+    //             sonic.css("background-color", "blue");
+    //             barrier1.css("background-color", "red");
+
+    //         } else {
+    //             // console.log("Collision Detected");
+    //             // barrier1.css("display", "none");
+    //             sonic.css("background-color", "black");
+    //             barrier1.css("background-color", "black");
+
+    //             // audio1.pause();
+    //             // audio3.play();
+
+    //             // sonic.addClass("animate_onBarrier");
+    //             // setTimeout(restartGame, 2000);
+    //         }
+    //         break;
+
+    //     case barrier2:
+    //         barrier2_collision = {
+    //             x: barrier2[0].offsetLeft - barrier2.scrollLeft(),
+    //             y: barrier2[0].offsetTop - barrier2.scrollTop(),
+    //             width: barrier2.outerWidth(),
+    //             height: barrier2.outerHeight()
+    //         }
+
+    //         if (sonic_collision.x > barrier2_collision.x + barrier2_collision.width ||
+    //             sonic_collision.x + sonic_width < barrier2_collision.x ||
+    //             sonic_collision.y > barrier2_collision.y + barrier2_collision.height ||
+    //             sonic_collision.y + sonic_collision.height < barrier2_collision.y) {
+
+    //             // console.log("NO Collision Detected");
+    //             // sonic.css("background-color", "blue");
+    //             // barrier2.css("background-color", "red");
+
+    //         } else {
+    //             // console.log("Collision Detected");
+    //             // barrier1.css("display", "none");
+    //             // sonic.css("background-color", "black");
+    //             // barrier2.css("background-color", "black");
+
+    //             audio1.pause();
+    //             audio3.play();
+
+    //             sonic.addClass("animate_onBarrier");
+    //             setTimeout(restartGame, 2000);
+    //         }
+    //         break;
+
+    //     default:
+    //         console.log("default barriers");
+    //         break;
+    // }
+
+}
