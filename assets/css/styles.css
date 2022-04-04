@@ -352,11 +352,11 @@ div#life-img>p#life {
 
 div#game-controls {
     /* border: 5px solid red; */
-    width: 300px;
+    width: 340px;
     height: 70px;
     position: absolute;
     top: 20px;
-    right: 0;
+    right: 15px;
     display: flex;
     justify-content: space-evenly;
     /* flex-direction: column; */
@@ -375,6 +375,13 @@ div#game-controls>button:hover {
     /* border: 2px solid blue; */
     width: 75px;
     height: 75px;
+}
+
+div#game-controls>button#btnSound {
+    /* background: transparent; */
+    background-image: url("../images/menu/sound.png");
+    background-size: cover;
+    background-position: center;
 }
 
 div#game-controls>button#btn_goToMenu {

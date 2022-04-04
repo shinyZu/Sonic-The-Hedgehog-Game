@@ -61,7 +61,7 @@ section#home-bg div#title-img {
     /* position: absolute;
     top: 50%;
     left: 50%; */
-    border: 2px solid red;
+    /* border: 2px solid red; */
     width: 475px;
     height: 225px;
     background-image: url('../images/menu/title.png');
@@ -119,7 +119,7 @@ button {
 button#btnPlay {
     width: 185px;
     height: 90px;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     background-image: url('../images/menu/play_button2.png');
     background-size: cover;
     background-position: center;

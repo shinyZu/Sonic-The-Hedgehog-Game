@@ -4,11 +4,12 @@ let sonic = $("#sonic");
 
 let rings = $(".ring");
 let ring1 = $("#ring1");
-// let ring2 = $("#ring2");
-// let ring3 = $("#ring3");
-// let ring4 = $("#ring4");
-// let ring5 = $("#ring5");
-// let ring6 = $("#ring6");
+
+let score = $("#score");
+let initial_score = 0;
+
+let life = $("#life");
+let initial_lifes = 3;
 
 let jump_pad1 = $("#jump_pad1");
 let barrier1 = $("#barrier1");
@@ -46,11 +47,15 @@ function fill_ringArray() {
 }
 
 function restartGame() {
-    audio1.play();
+    // audio1.play();
     gameStage.css("margin-left", "0%").css("transition", "margin-left 0.5s");
     moveTo_InitialPosition();
     setTimeout(showRings, 800);
+
     stage_count = 0;
+    initial_score = 0;
+    initial_lifes = initial_lifes - 1
+    $(life).text("x" + initial_lifes);
 }
 
 fill_ringArray();
@@ -375,6 +380,8 @@ function check_ring_collision() {
             // audio2.pause();
             audio2.play();
             active_ring.css("display", "none");
+            initial_score = initial_score + 10;
+            $(score).text(initial_score);
 
             // setInterval(function () {
             //     audio2.pause()
@@ -430,7 +437,7 @@ function check_jumpPad_collision() {
     }
 }
 
-function check_barrier1_collision(barrier) {
+function check_barrier_collision(barrier, event) {
     if (!isFlipped) { // if moving to right
         x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 551 - 421
 
@@ -470,8 +477,12 @@ function check_barrier1_collision(barrier) {
                 // barrier1.css("display", "none");
                 // sonic.css("background-color", "black");
                 // barrier1.css("background-color", "black");
+                event.preventDefault();
                 audio1.pause();
                 audio3.play();
+
+
+
                 sonic.addClass("animate_onBarrier");
                 setTimeout(restartGame, 2000);
             }
@@ -515,7 +526,7 @@ function check_barrier1_collision(barrier) {
 
 $(document).on({
     keydown: function (e) {
-        audio1.play();
+        // audio1.play();
 
         switch (e.which) {
 
@@ -602,18 +613,18 @@ $(document).on({
 
         switch (stage_count) {
             case 1:
-                check_barrier1_collision(barrier1);
+                check_barrier_collision(barrier1, e);
                 break;
 
             case 3:
-                check_barrier1_collision(barrier2);
+                check_barrier_collision(barrier2, e);
                 break;
 
             default:
                 console.log("asasasasasas");
                 break;
         }
-        check_barrier1_collision();
+        // check_barrier1_collision();
 
     },
 
@@ -630,23 +641,16 @@ $(document).on({
     }
 });
 
-
-
-// $(document).ready(function() {
-//     var sounds = new SoundManager();//**
-//     var level = new Level('world');//world is the id of the corresponding DOM container
-//     level.setSounds(sounds);//*
-//     level.load(definedLevels[0]);
-//     level.start();
-//     keys.bind();
-// });
-
-// var myAudio = document.createElement("audio");
-// myAudio.src = "mysprite.mp3";
-// myAudio.play();
-// myAudio.pause();
-
 $("#btn_goToMenu").click(function (e) {
     window.location.href = "index.html";
+
+});
+
+$("#btnSound").click(function (e) {
+    if (!audio1.paused) {
+        audio1.pause();
+    } else {
+        audio1.play();
+    }
 
 });
