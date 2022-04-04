@@ -12,6 +12,7 @@ let ring1 = $("#ring1");
 
 let jump_pad1 = $("#jump_pad1");
 let barrier1 = $("#barrier1");
+let barrier2 = $("#barrier2");
 
 var gameStage = $("#bg-container2");
 let stage_count = 0;
@@ -45,6 +46,7 @@ function fill_ringArray() {
 }
 
 function restartGame() {
+    audio1.play();
     gameStage.css("margin-left", "0%").css("transition", "margin-left 0.5s");
     moveTo_InitialPosition();
     setTimeout(showRings, 800);
@@ -328,7 +330,10 @@ audio1.src = "../assets/audio/BridgeZone.mp3";
 
 let audio2 = new Audio();
 audio2.src = "../assets/audio/RingCollect.mp3";
-audio2.currentTime = 0.01;
+// audio2.currentTime = 0.01;
+
+let audio3 = new Audio();
+audio3.src = "../assets/audio/GameOver2.wav";
 
 function check_ring_collision() {
     var x_pos;
@@ -416,8 +421,8 @@ function check_jumpPad_collision() {
     } else {
         // console.log("Collision Detected");
         // jump_pad1.css("display", "none");
-        sonic.css("background-color", "black");
-        jump_pad1.css("background-color", "black");
+        // sonic.css("background-color", "black");
+        // jump_pad1.css("background-color", "black");
 
         // sonic.removeClass("sonic_top");
         // sonic.addClass("sonic_alt_top");
@@ -425,7 +430,7 @@ function check_jumpPad_collision() {
     }
 }
 
-function check_barrier1_collision() {
+function check_barrier1_collision(barrier) {
     if (!isFlipped) { // if moving to right
         x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 551 - 421
 
@@ -441,34 +446,72 @@ function check_barrier1_collision() {
         height: sonic_height
     };
 
-    barrier1_collision = {
-        x: barrier1[0].offsetLeft - barrier1.scrollLeft(),
-        y: barrier1[0].offsetTop - barrier1.scrollTop(),
-        width: barrier1.outerWidth(),
-        height: barrier1.outerHeight()
-    }
+    switch (barrier) {
+        case barrier1:
 
-    if (sonic_collision.x > barrier1_collision.x + barrier1_collision.width ||
-        sonic_collision.x + sonic_width < barrier1_collision.x ||
-        sonic_collision.y > barrier1_collision.y + barrier1_collision.height ||
-        sonic_collision.y + sonic_collision.height < barrier1_collision.y) {
+            barrier1_collision = {
+                x: barrier1[0].offsetLeft - barrier1.scrollLeft(),
+                y: barrier1[0].offsetTop - barrier1.scrollTop(),
+                width: barrier1.outerWidth(),
+                height: barrier1.outerHeight()
+            }
 
-        // console.log("NO Collision Detected");
-        sonic.css("background-color", "blue");
-        barrier1.css("background-color", "red");
+            if (sonic_collision.x > barrier1_collision.x + barrier1_collision.width ||
+                sonic_collision.x + sonic_width < barrier1_collision.x ||
+                sonic_collision.y > barrier1_collision.y + barrier1_collision.height ||
+                sonic_collision.y + sonic_collision.height < barrier1_collision.y) {
 
-    } else {
-        // console.log("Collision Detected");
-        // // barrier1.css("display", "none");
-        sonic.css("background-color", "black");
-        barrier1.css("background-color", "black");
+                // console.log("NO Collision Detected");
+                // sonic.css("background-color", "blue");
+                // barrier1.css("background-color", "red");
 
-        // sonic.addClass("animate_onBarrier");
-        // setTimeout(restartGame, 2000);
+            } else {
+                // console.log("Collision Detected");
+                // barrier1.css("display", "none");
+                // sonic.css("background-color", "black");
+                // barrier1.css("background-color", "black");
+                audio1.pause();
+                audio3.play();
+                sonic.addClass("animate_onBarrier");
+                setTimeout(restartGame, 2000);
+            }
+            break;
+
+        case barrier2:
+            barrier2_collision = {
+                x: barrier2[0].offsetLeft - barrier2.scrollLeft(),
+                y: barrier2[0].offsetTop - barrier2.scrollTop(),
+                width: barrier2.outerWidth(),
+                height: barrier2.outerHeight()
+            }
+
+            if (sonic_collision.x > barrier2_collision.x + barrier2_collision.width ||
+                sonic_collision.x + sonic_width < barrier2_collision.x ||
+                sonic_collision.y > barrier2_collision.y + barrier2_collision.height ||
+                sonic_collision.y + sonic_collision.height < barrier2_collision.y) {
+
+                // console.log("NO Collision Detected");
+                // sonic.css("background-color", "blue");
+                // barrier2.css("background-color", "red");
+
+            } else {
+                // console.log("Collision Detected");
+                // barrier1.css("display", "none");
+                // sonic.css("background-color", "black");
+                // barrier2.css("background-color", "black");
+
+                audio1.pause();
+                audio3.play();
+                sonic.addClass("animate_onBarrier");
+                setTimeout(restartGame, 2000);
+            }
+            break;
+
+        default:
+            console.log("default barriers");
+            break;
     }
 }
-
-
 
 $(document).on({
     keydown: function (e) {
@@ -554,36 +597,23 @@ $(document).on({
                 break;
         }
 
-
-
-        // if (!isFlipped) { // if moving to right
-        //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 591 - 721;
-
-        // } else { // if moving to left
-        //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() + 80;// 571 - 706
-        // }
-
-        // sonic_collision = {
-        //     x: x_pos,
-        //     y: sonic[0].offsetTop - sonic.scrollTop(),
-        //     width: sonic_width,
-        //     height: sonic_height
-        // };
-
-        // ring_collision = {
-        //     x: ring1[0].offsetLeft - ring1.scrollLeft(),
-        //     y: ring1[0].offsetTop - ring1.scrollTop(),
-        //     width: ring_width,
-        //     height: ring_height
-        // };
-
-
         check_ring_collision();
-        check_jumpPad_collision();
+        // check_jumpPad_collision();
+
+        switch (stage_count) {
+            case 1:
+                check_barrier1_collision(barrier1);
+                break;
+
+            case 3:
+                check_barrier1_collision(barrier2);
+                break;
+
+            default:
+                console.log("asasasasasas");
+                break;
+        }
         check_barrier1_collision();
-
-
-
 
     },
 
@@ -615,3 +645,8 @@ $(document).on({
 // myAudio.src = "mysprite.mp3";
 // myAudio.play();
 // myAudio.pause();
+
+$("#btn_goToMenu").click(function (e) {
+    window.location.href = "index.html";
+
+});

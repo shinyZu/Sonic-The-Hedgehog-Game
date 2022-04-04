@@ -4,74 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Using Canvas</title>
-
-    <style>
-        * {
-
-box-sizing:border-box;
-margin:0;
-padding:0;
-
-}
-
-html, body {
-
-height:100%;
-width:100%;
-
-}
-
-body {
-
-align-content:space-around;
-background-color:#202830;
-color:#ffffff;
-display:grid;
-justify-content:center;
-
-}
-
-canvas {
-
-background-color:#ffffff;
-
-}
-    </style>
+    <title>SONIC GAME</title>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&family=Amarante&family=Aref+Ruqaa:wght@700&family=Bakbak+One&family=Baloo+Chettan+2:wght@500&family=Metamorphous&family=Patrick+Hand&display=swap" rel="stylesheet">
 </head>
-<body onload="startGame()">
-    <canvas></canvas>
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/script-v2.js"></script>
+<body>
+    <section id="bg-container1">
+        <section id="bg-container2">
 
+            <div class="bg">
+                <div id="level1_1" class="level">
+                    <!-- <div id="jump_pad1"></div> -->
+                </div>
+            </div>
+            <div class="bg">
+                <div id="level1_2" class="level">
+                    <div id="barrier1"></div>
+                </div>
+            </div>
+            <div class="bg">
+                <div id="level2_1" class="level"></div>
+            </div>
+            <div class="bg">
+                <div id="level2_2" class="level">
+                    <div id="barrier2"></div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <div id="sonic" class="sonic_top"></div>
+    <div id="ring1" class="ring ring_top"></div>
+    <div id="ring2" class="ring ring_top"></div>
+    <div id="ring3" class="ring ring_top"></div>
+    <div id="ring4" class="ring ring_top"></div>
+    <div id="ring5" class="ring ring_top"></div>
+
+    <div id="score-img">
+        <p id="score">Score</p>
+    </div>
+    <div id="life-img">
+        <p id="life"><small>X</small>&nbsp;3</p>
+    </div>
+
+    <div id="game-controls">
+        <button id="btn_goToMenu"></button>
+        <button id="btnPause"></button>
+        <button id="btnResume"></button>
+    </div>
+
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/oridomi.min.js"></script>
+    <!-- <script src="assets/js/script.js"></script> -->
+    <!-- <script src="assets/js/script-v2.js"></script> -->
+    <!-- <script src="assets/js/script-v4.js"></script> -->
+    <!-- <script src="assets/js/script-v5.js"></script> -->
+    <script src="assets/js/script-v6.js"></script>
 </body>
 </html>
-
-<!-- <!DOCTYPE html>
-<html>
-<body>
-
-<p>Image to use:</p>
-
-<img id="bg" width="220" height="277"
-src="../assets/images/bg.jpg" alt="BG">
-
-<p>Canvas:</p>
-
-<canvas id="myCanvas" width="240" height="297"
-style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.
-</canvas>
-
-<script>
-    var canvas;
-window.onload = function() {
-    canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    var img = document.getElementById("bg");
-    ctx.drawImage(img, 10, 10);
-};
-</script>
-
-</body>
-</html> -->
