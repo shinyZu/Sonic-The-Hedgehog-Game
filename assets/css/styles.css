@@ -37,8 +37,8 @@ div#sonic.flip-standing {
     margin: auto;
 } */
 
-div#sonic {
-    /* width: 180px;
+/* div#sonic { */
+/* width: 180px;
     height: 250px;
     position: absolute;
     top: 65%;
@@ -49,13 +49,21 @@ div#sonic {
     background-position: center;
     background-size: cover; */
 
-    /* width: 238px; */
-    /* top: 500px; */
-    /* top: 0; */
-    /* background-image: url('../images/sonic_waiting.gif'); */
-    /* -webkit-transform: scaleX(-1);
+/* width: 238px; */
+/* top: 500px; */
+/* top: 0; */
+/* background-image: url('../images/sonic_waiting.gif'); */
+/* -webkit-transform: scaleX(-1);
     transform: scaleX(-1); */
-    /* z-index: 1; */
+/* z-index: 1; */
+/* } */
+
+.sonic_top {
+    top: 72%;
+}
+
+.sonic_alt_top {
+    top: 18%;
 }
 
 div#sonic {
@@ -67,7 +75,7 @@ div#sonic {
     background-size: cover;
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 72%;
+    /* top: 72%; */
     left: 6%;
     /* z-index: 1; */
 }
@@ -76,7 +84,8 @@ div#sonic_stand {
     width: 200px;
     height: 250px;
     position: absolute;
-    top: 500px;
+    /* top: 500px; */
+    /* top: 72%; */
     left: 0;
     bottom: 45px;
     margin: auto;
@@ -89,7 +98,8 @@ div#sonic_walk {
     width: 200px;
     height: 250px;
     position: absolute;
-    top: 500px;
+    /* top: 500px; */
+    /* top: 72%; */
     left: 250px;
     bottom: 45px;
     margin: auto;
@@ -102,7 +112,8 @@ div#sonic_run {
     width: 200px;
     height: 250px;
     position: absolute;
-    top: 500px;
+    /* top: 500px; */
+    /* top: 72%; */
     left: 500px;
     bottom: 45px;
     margin: auto;
@@ -116,7 +127,8 @@ div#sonic_spin {
     /* width: 180px; */
     height: 250px;
     position: absolute;
-    top: 500px;
+    /* top: 500px; */
+    /* top: 72%; */
     left: 750px;
     bottom: 45px;
     margin: auto;
@@ -125,7 +137,7 @@ div#sonic_spin {
     background-size: cover;
 }
 
-/* ------------------------------Rings & Barriers-------------------------------- */
+/* ------------------------------Rings-------------------------------- */
 
 /* div#ring {
     width: 130px;
@@ -165,12 +177,12 @@ div.ring {
     transform: translate(-50%, -50%);
 }
 
-.alt_ring_top {
-    top: 48%;
-}
-
 .ring_top {
     top: 73%
+}
+
+.alt_ring_top {
+    top: 48%;
 }
 
 div#ring1 {
@@ -198,21 +210,33 @@ div#ring5 {
     left: 80%;
 }
 
+/* ------------------------------Barriers-------------------------------- */
+
+section#bg-container1 {
+    /* border: 5px solid yellow; */
+}
+
+section#bg-container1>section#bg-container2 {
+    /* border: 8px solid red; */
+}
 
 section#bg-container1>section#bg-container2>div.bg>div.level {
-    /* border: 2px solid purple; */
+    border: 2px solid purple;
     height: 350px;
 
 }
 
-section#bg-container1>section#bg-container2>div.bg>div.level#level1_1 {
+section#bg-container1>section#bg-container2>div.bg>div.level#level1_1,
+section#bg-container1>section#bg-container2>div.bg>div.level#level1_2,
+section#bg-container1>section#bg-container2>div.bg>div.level#level2_2 {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    /* overflow: hidden; */
 }
 
 section#bg-container1>section#bg-container2>div.bg>div.level#level1_1>div#jump_pad1 {
-    /* border: 5px solid rgb(183, 38, 219); */
+    border: 5px solid rgb(183, 38, 219);
     position: absolute;
     /* top: 0; */
     width: 490px;
@@ -222,8 +246,62 @@ section#bg-container1>section#bg-container2>div.bg>div.level#level1_1>div#jump_p
     background-position: center;
 }
 
-section#bg-container1>section#bg-container2>div.bg>div.level#level1_2>div#jump_pad2 {
-    /* border: 5px solid rgb(183, 38, 219); */
+/* section#bg-container1>section#bg-container2>div.bg>div.level#level1_2>div#jump_pad2 {
+    border: 5px solid rgb(183, 38, 219);
     width: 200px;
     height: 150px;
+} */
+
+section#bg-container1>section#bg-container2>div.bg:nth-child(2)>div.level#level1_2>div#barrier1 {
+    border: 5px solid rgb(183, 38, 219);
+    position: relative;
+    top: 300px;
+    width: 330px;
+    height: 100px;
+    background-image: url("../images/barriers/jump_pad_danger1.png");
+    background-size: cover;
+    background-position: center;
+}
+
+section#bg-container1>section#bg-container2>div.bg:nth-child(4)>div.level#level2_2>div#barrier2 {
+    border: 5px solid rgb(183, 38, 219);
+    position: relative;
+    top: 300px;
+    width: 330px;
+    height: 100px;
+    background-image: url("../images/barriers/jump_pad_danger4.png");
+    background-size: cover;
+    background-position: center;
+}
+
+/* ------------------------------Animations-------------------------------- */
+
+.animate_onBarrier {
+    animation: 0.5s blink_sonic alternate;
+    /* animation-name: blink_sonic;
+    animation-duration: 0.5s; */
+    animation-iteration-count: 5;
+    /* animation-direction: alternate; */
+}
+
+@keyframes blink_sonic {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0.25;
+    }
+
+    50% {
+        opacity: 0.50;
+    }
+
+    75% {
+        opacity: 0.75;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
