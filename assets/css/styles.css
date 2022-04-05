@@ -432,3 +432,36 @@ div#game-controls>button#btnResume {
     filter: blur(8px);
     -webkit-filter: blur(2px);
 }
+
+section#pause-bg {
+    /* border: 2px solid red; */
+    width: 450px;
+    height: 450px;
+    background-image: url('../images/sonic_pause.png');
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+section#pause-bg div#title-img {
+    /* border: 2px solid red; */
+    width: 400px;
+    height: 200px;
+    background-image: url('../images/menu/title.png');
+    background-size: cover;
+    background-position: center;
+    /* position: relative;
+    top: 140px; */
+    position: absolute;
+    top: 185px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    /* animation: spin 4s linear; */
+}

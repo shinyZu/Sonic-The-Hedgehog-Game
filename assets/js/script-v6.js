@@ -471,25 +471,7 @@ function isWithinBarrierRange() {
     }
 }
 
-function check_barrier_collision(barrier) {
-    // if (isWithinBarrierRange()) {
-    //     audio1.pause();
-    //     audio3.play();
-
-    //     sonic.addClass("animate_onBarrier");
-    //     setTimeout(restartGame, 2000);
-    // }
-
-
-    // if (!isFlipped) { // if moving to right
-    //     b_leftPos = barrier_boundingRect.left - 120;
-    //     b_rightPos = barrier_boundingRect.right - 40;
-
-    // } else { // if moving to left
-    //     b_leftPos = barrier_boundingRect.left - 120;
-    //     b_rightPos = barrier_boundingRect.right - 40;
-    // }
-
+function check_barrier_collision() {
     sonic_collision = {
         x: sonic[0].offsetLeft + 1440,
         y: sonic[0].offsetTop,
@@ -529,7 +511,11 @@ function check_barrier_collision(barrier) {
 }
 
 playGame();
+
 function playGame() {
+    $("#pause-bg").css("display", "none");
+    $("#title-img").css("display", "none");
+
     $(document).on({
         keydown: function (e) {
             // audio1.play();
@@ -637,7 +623,6 @@ function playGame() {
     });
 }
 
-
 $("#btn_goToMenu").click(function (e) {
     window.location.href = "index.html";
 
@@ -653,17 +638,36 @@ $("#btnSound").click(function (e) {
     }
 });
 
+function blurComponents() {
+    // $("body").addClass("bg-blur");
+    $("#bg-container1").addClass("bg-blur");
+    $("#score-img").addClass("bg-blur");
+    $("#life-img").addClass("bg-blur");
+    sonic.addClass("bg-blur");
+    rings.addClass("bg-blur");
+}
+
+function remove_blur() {
+    // $("body").removeClass("bg-blur");
+    $("#bg-container1").removeClass("bg-blur");
+    $("#score-img").removeClass("bg-blur");
+    $("#life-img").removeClass("bg-blur");
+    sonic.removeClass("bg-blur");
+    rings.removeClass("bg-blur");
+}
+
 $("#btnPause").click(function (e) {
     $("body").css("pointer-events", "none");
     $("#btnPause").css("pointer-events", "auto");
     $("#btnResume").css("pointer-events", "auto");
     $(document).off("keydown");
 
-    $("body").addClass("bg-blur");
     $("#btnPause").addClass("pause");
-    // $("#btnPause").removeClass("bg-blur");
     $("#btnResume").removeClass("pause");
 
+    blurComponents();
+    $("#pause-bg").css("display", "block");
+    $("#title-img").css("display", "block");
     audio1.pause();
 });
 
@@ -672,7 +676,10 @@ $("#btnResume").click(function (e) {
     $("body").css("pointer-events", "auto");
     $("#btnPause").removeClass("pause");
     $("#btnResume").addClass("pause");
+    remove_blur();
 
+    $("#pause-bg").css("display", "none");
+    $("#title-img").css("display", "none");
     if (audio1.paused) {
         audio1.pause();
     } else {
