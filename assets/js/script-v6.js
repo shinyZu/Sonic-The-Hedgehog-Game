@@ -37,6 +37,45 @@ var active_ring;
 let jump_state = false;
 let isFlipped = false;
 
+let sonic_collision;
+let ring_collision;
+let jump_pad_collision;
+let barrier1_collision;
+var x_pos;
+
+var barrier_boundingRect = barrier1[0].getBoundingClientRect();
+var sonic_boundingRect = sonic[0].getBoundingClientRect();
+
+let audio1 = new Audio();
+audio1.src = "../assets/audio/BridgeZone.mp3";
+audio1.play();
+audio1.loop = true;
+
+let audio2 = new Audio();
+audio2.src = "../assets/audio/RingCollect.mp3";
+
+let audio3 = new Audio();
+audio3.src = "../assets/audio/GameOver2.wav";
+
+(function () {
+    $("#pause-bg").css("display", "none");
+    $("#title-img").css("display", "none");
+    $("#btnSound").addClass("sound-on");
+})();
+
+function playBgTrack() {
+    // if (audio1.paused) {
+    //     audio1.pause();
+    // } else {
+    //     audio1.play();
+    // } 
+    if ($("#btnSound").hasClass("sound-on")) {
+        audio1.play();
+    } else {
+        audio1.pause();
+    }
+}
+
 function fill_ringArray() {
     for (let i = 0; i < rings.length; i++) {
         ring_array[i] = $(rings[i]);
@@ -48,19 +87,30 @@ function fill_ringArray() {
 
 fill_ringArray();
 
+let restart_timerId;
+
+function reduce_lifeCount() {
+    initial_lifes = initial_lifes - 1;
+    $(life).text("x " + initial_lifes);
+
+    if (initial_lifes == 0) {
+        console.log("Game Over");
+    }
+}
+
 function restartGame() {
+    // clearTimeout(restart_timerId);
+    audio1.currentTime = 0;
+    playBgTrack();
+    playGame();
 
     gameStage.css("margin-left", "0%").css("transition", "margin-left 0.5s");
     moveTo_InitialPosition();
     setTimeout(showRings, 800);
 
     stage_count = 0;
-    // alt_rings();
     initial_score = 0;
-    initial_lifes = initial_lifes - 1;
-
     $(score).text("0" + initial_score);
-    $(life).text("x" + initial_lifes);
 }
 
 function moveLeft() {
@@ -169,6 +219,7 @@ function avoidMove_belowGroundLevel() {
 }
 
 function moveTo_InitialPosition() {
+    sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
     if (isFlipped) {
         sonic.removeClass("flip-standing");
     }
@@ -326,30 +377,6 @@ function jump_OnSpaceBar() {
     });
 }
 
-let sonic_collision;
-let ring_collision;
-let jump_pad_collision;
-let barrier1_collision;
-var x_pos;
-// var y_pos;
-
-var barrier_boundingRect = barrier1[0].getBoundingClientRect();
-var sonic_boundingRect = sonic[0].getBoundingClientRect();
-
-// var b_xPos;
-// var b_yPos;
-// var b_rightPos;
-// var b_leftPos;
-
-let audio1 = new Audio();
-audio1.src = "../assets/audio/BridgeZone.mp3";
-
-let audio2 = new Audio();
-audio2.src = "../assets/audio/RingCollect.mp3";
-
-let audio3 = new Audio();
-audio3.src = "../assets/audio/GameOver2.wav";
-
 function check_ring_collision() {
     var x_pos;
     if (!isFlipped) { // if moving to right
@@ -387,18 +414,16 @@ function check_ring_collision() {
 
         } else {
             // console.log("Collision Detected");
-            // audio2.pause();
-            audio2.play();
+            // sonic.css("background-color", "black");
+            // active_ring.css("background-color", "black");
+
             active_ring.css("display", "none");
+            audio2.play();
+            audio2.currentTime = 0;
+
             initial_score = initial_score + 10;
             $(score).text(initial_score);
 
-            // setInterval(function () {
-            //     audio2.pause()
-            // }, 100);
-
-            // sonic.css("background-color", "black");
-            // active_ring.css("background-color", "black");
         }
     }
 }
@@ -496,12 +521,15 @@ function check_barrier_collision() {
         // sonic.css("background-color", "black");
         // barrier1.css("background-color", "black");
 
+        $(document).off("keydown");
+        $(document).off("keyup");
+
         audio1.pause();
         audio3.play();
 
         sonic.addClass("animate_onBarrier");
-        setTimeout(restartGame, 2000);
-
+        reduce_lifeCount();
+        restart_timerId = setTimeout(restartGame, 2000);
 
     } else {
         //---- Collision Not Detected
@@ -510,15 +538,13 @@ function check_barrier_collision() {
     }
 }
 
-playGame();
+var timerId = setInterval(playGame, 100);
 
 function playGame() {
-    $("#pause-bg").css("display", "none");
-    $("#title-img").css("display", "none");
-
+    clearInterval(timerId);
     $(document).on({
+
         keydown: function (e) {
-            // audio1.play();
 
             switch (e.which) {
 
@@ -596,11 +622,11 @@ function playGame() {
 
             switch (stage_count) {
                 case 1:
-                    check_barrier_collision(barrier1, e);
+                    check_barrier_collision();
                     break;
 
                 case 3:
-                    check_barrier_collision(barrier2, e);
+                    check_barrier_collision();
                     break;
 
                 default:
@@ -625,7 +651,6 @@ function playGame() {
 
 $("#btn_goToMenu").click(function (e) {
     window.location.href = "index.html";
-
 });
 
 $("#btnSound").click(function (e) {
@@ -639,7 +664,6 @@ $("#btnSound").click(function (e) {
 });
 
 function blurComponents() {
-    // $("body").addClass("bg-blur");
     $("#bg-container1").addClass("bg-blur");
     $("#score-img").addClass("bg-blur");
     $("#life-img").addClass("bg-blur");
@@ -648,7 +672,7 @@ function blurComponents() {
 }
 
 function remove_blur() {
-    // $("body").removeClass("bg-blur");
+    $("body").removeClass("bg-blur");
     $("#bg-container1").removeClass("bg-blur");
     $("#score-img").removeClass("bg-blur");
     $("#life-img").removeClass("bg-blur");
@@ -660,32 +684,47 @@ $("#btnPause").click(function (e) {
     $("body").css("pointer-events", "none");
     $("#btnPause").css("pointer-events", "auto");
     $("#btnResume").css("pointer-events", "auto");
+    $("#btnRestart").css("pointer-events", "auto");
     $(document).off("keydown");
+    $(document).off("keyup");
 
     $("#btnPause").addClass("pause");
     $("#btnResume").removeClass("pause");
 
     blurComponents();
+
     $("#pause-bg").css("display", "block");
     $("#title-img").css("display", "block");
+
     audio1.pause();
 });
 
 $("#btnResume").click(function (e) {
-    $("body").removeClass("bg-blur");
     $("body").css("pointer-events", "auto");
     $("#btnPause").removeClass("pause");
+    $("#btnRestart").removeClass("pause");
     $("#btnResume").addClass("pause");
+
     remove_blur();
 
     $("#pause-bg").css("display", "none");
     $("#title-img").css("display", "none");
-    if (audio1.paused) {
-        audio1.pause();
-    } else {
-        audio1.play();
-    }
 
+    playBgTrack();
     playGame();
 
 });
+
+$("#btnRestart").click(function (e) {
+    $("body").css("pointer-events", "auto");
+    $("#btnPause").removeClass("pause");
+    $("#btnResume").removeClass("pause");
+    $("#btnRestart").addClass("pause");
+    remove_blur();
+    $("#pause-bg").css("display", "none");
+    $("#title-img").css("display", "none");
+    initial_lifes = 3;
+    life.text("x " + initial_lifes);
+    restartGame();
+});
+

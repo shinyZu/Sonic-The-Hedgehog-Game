@@ -365,7 +365,7 @@ div#life-img>p#life {
 
 div#game-controls {
     /* border: 5px solid red; */
-    width: 340px;
+    width: 390px;
     height: 70px;
     position: absolute;
     top: 20px;
@@ -412,6 +412,12 @@ div#game-controls>button#btnPause {
 
 div#game-controls>button#btnResume {
     background-image: url("../images/menu/resume2.png");
+    background-size: cover;
+    background-position: center;
+}
+
+div#game-controls>button#btnRestart {
+    background-image: url("../images/menu/restart.png");
     background-size: cover;
     background-position: center;
 }
@@ -465,3 +471,5 @@ section#pause-bg div#title-img {
     margin: auto;
     /* animation: spin 4s linear; */
 }
+
+/* ------------------------------Game Over-------------------------------- */
