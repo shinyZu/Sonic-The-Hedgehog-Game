@@ -648,6 +648,8 @@ section#gameWin-bg div#gameWin_title-img {
     }
 }
 
+/* --------------------------------------------*/
+
 .moveUp {
     animation: moveUp 1s linear;
     animation-fill-mode: forwards;
