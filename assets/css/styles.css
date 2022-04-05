@@ -415,3 +415,20 @@ div#game-controls>button#btnResume {
     background-size: cover;
     background-position: center;
 }
+
+/* ------------------------------Pause & Resume Game-------------------------------- */
+
+.pause {
+    width: 75px;
+    height: 75px;
+}
+
+.sound-on {
+    width: 75px;
+    height: 75px;
+}
+
+.bg-blur {
+    filter: blur(8px);
+    -webkit-filter: blur(2px);
+}

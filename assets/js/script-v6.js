@@ -31,41 +31,37 @@ let ring_width = ring1.outerWidth();
 let ring_height = ring1.outerHeight();
 
 let ring_array = [];
-// let ring_widthInfo = [];
-// let ring_heightInfo = [];
 
 var active_ring;
+
+let jump_state = false;
+let isFlipped = false;
 
 function fill_ringArray() {
     for (let i = 0; i < rings.length; i++) {
         ring_array[i] = $(rings[i]);
-        // console.log(ring_array[i]);
     }
 
     ring_array[2].removeClass("ring_top");
     ring_array[2].addClass("alt_ring_top");
 }
 
+fill_ringArray();
+
 function restartGame() {
-    // audio1.play();
+
     gameStage.css("margin-left", "0%").css("transition", "margin-left 0.5s");
     moveTo_InitialPosition();
     setTimeout(showRings, 800);
 
     stage_count = 0;
+    // alt_rings();
     initial_score = 0;
-    initial_lifes = initial_lifes - 1
+    initial_lifes = initial_lifes - 1;
+
     $(score).text("0" + initial_score);
     $(life).text("x" + initial_lifes);
 }
-
-fill_ringArray();
-
-let css_left;
-let css_top;
-
-let jump_state = false;
-let isFlipped = false;
 
 function moveLeft() {
     sonic_startPosX = sonic[0].offsetLeft;
@@ -83,7 +79,6 @@ function moveUp() {
     sonic_startPosY = sonic[0].offsetTop;
 
     if (sonic_startPosY <= 91) {
-        console.log(sonic[0].offsetLeft);
         avoidMove_atTopEdge();
     }
 
@@ -107,12 +102,27 @@ function moveRight() {
     });
 }
 
+function moveDown() {
+    sonic_startPosY = sonic[0].offsetTop;
+
+    if (isFlipped) { // if turn back
+        roll_backward();
+
+    } else {
+        roll_forward();
+    }
+}
+
 function moveUp_Left() {
     sonic_startPosY = sonic[0].offsetTop;
     sonic_startPosX = sonic[0].offsetLeft;
 
     if (sonic.position().left <= 0) {
         avoidMove_atLeftEdge();
+    }
+
+    if (sonic_startPosY <= 91) {
+        avoidMove_atTopEdge();
     }
 
     sonic.finish().animate({
@@ -127,6 +137,10 @@ function moveUp_Right() {
 
     if (sonic[0].offsetLeft >= 1410) {
         change_Stage();
+    }
+
+    if (sonic_startPosY <= 91) {
+        avoidMove_atTopEdge();
     }
 
     sonic.finish().animate({
@@ -170,32 +184,26 @@ function showRings() {
     }
 }
 
-function hideRings(index) {
-    // for (let i in ring_array) {
-    //     ring_array[i].css("display", "none");
-    // }
-    ring_array[index].css("display", "none");
-}
+// function hideRings(index) {
+//     ring_array[index].css("display", "none");
+// }
 
-function remove_altRing_class() {
-    for (let i in ring_array) {
-        ring_array[i].removeClass(".alt_ring");
-    }
-}
+// function remove_altRing_class() {
+//     for (let i in ring_array) {
+//         ring_array[i].removeClass(".alt_ring");
+//     }
+// }
 
 function alt_rings() {
     switch (stage_count) {
         case 0:
-            console.log("stage count is 0 : " + stage_count);
+            // console.log("stage count is 0 : " + stage_count);
             ring_array[2].removeClass("ring_top");
             ring_array[2].addClass("alt_ring_top");
             break;
 
         case 1:
-            console.log("stage count is 1 : " + stage_count);
-            // ring_array[3].removeClass("ring_top");
-            // ring_array[3].addClass("alt_ring_top");
-            // ring_array[0].css("left", "10%");
+            // console.log("stage count is 1 : " + stage_count);
             ring_array[1].css("left", "30%");
             ring_array[2].css("display", "none");
             ring_array[3].css("left", "75%");
@@ -203,13 +211,13 @@ function alt_rings() {
             break;
 
         case 2:
-            console.log("stage count is 2 : " + stage_count);
+            // console.log("stage count is 2 : " + stage_count);
             ring_array[4].removeClass("ring_top");
             ring_array[4].addClass("alt_ring_top");
             break;
 
         case 3:
-            console.log("stage count is 3 : " + stage_count);
+            // console.log("stage count is 3 : " + stage_count);
             ring_array[1].removeClass("ring_top");
             ring_array[1].addClass("alt_ring_top");
             break;
@@ -218,17 +226,6 @@ function alt_rings() {
             break;
     }
 }
-
-// let non_collected_rings = [];
-
-// function getAllNonCollectedRings() {
-//     for (let i in ring_array) {
-//         if ($(ring_array[i]).css("display") == "block") {
-//             non_collected_rings[0] = ring_array[i];
-//         }
-//     }
-//     console.log(non_collected_rings);
-// }
 
 function change_Stage() {
     switch (stage_count) {
@@ -321,7 +318,6 @@ function jump_OnSpaceBar() {
     sonic_startPosY = sonic[0].offsetTop;
 
     if (sonic[0].offsetLeft >= 0) {
-        console.log(sonic[0].offsetLeft);
         avoidMove_atTopEdge();
     }
 
@@ -335,14 +331,21 @@ let ring_collision;
 let jump_pad_collision;
 let barrier1_collision;
 var x_pos;
-var y_pos;
+// var y_pos;
+
+var barrier_boundingRect = barrier1[0].getBoundingClientRect();
+var sonic_boundingRect = sonic[0].getBoundingClientRect();
+
+// var b_xPos;
+// var b_yPos;
+// var b_rightPos;
+// var b_leftPos;
 
 let audio1 = new Audio();
 audio1.src = "../assets/audio/BridgeZone.mp3";
 
 let audio2 = new Audio();
 audio2.src = "../assets/audio/RingCollect.mp3";
-// audio2.currentTime = 0.01;
 
 let audio3 = new Audio();
 audio3.src = "../assets/audio/GameOver2.wav";
@@ -444,14 +447,6 @@ function check_jumpPad_collision() {
     }
 }
 
-var barrier_boundingRect = barrier1[0].getBoundingClientRect();
-var sonic_boundingRect = sonic[0].getBoundingClientRect();
-
-var b_xPos;
-var b_yPos;
-var b_rightPos;
-var b_leftPos;
-
 function isWithinBarrierRange() {
     if (!isFlipped) { // if moving to right
 
@@ -533,119 +528,115 @@ function check_barrier_collision(barrier) {
     }
 }
 
-$(document).on({
-    keydown: function (e) {
-        // audio1.play();
+playGame();
+function playGame() {
+    $(document).on({
+        keydown: function (e) {
+            // audio1.play();
 
-        switch (e.which) {
+            switch (e.which) {
 
-            case 37: // left
-                sonic.removeClass("animate_onBarrier");
+                case 37: // left
+                    sonic.removeClass("animate_onBarrier");
 
-                if (!jump_state) {
+                    if (!jump_state) {
 
-                    sonic.addClass("flip-standing");
-                    isFlipped = sonic.hasClass("flip-standing");
-                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+                        sonic.addClass("flip-standing");
+                        isFlipped = sonic.hasClass("flip-standing");
+                        sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
 
-                    moveLeft();
+                        moveLeft();
 
-                } else { // up + left
+                    } else { // up + left
+                        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                        moveUp_Left();
+                    }
+
+                    break;
+
+                case 38: // up
+                    jump_state = true;
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                    moveUp_Left();
-                }
 
-                break;
+                    moveUp();
+                    break;
 
-            case 38: // up
-                jump_state = true;
-                sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                case 39: // right
+                    sonic.removeClass("animate_onBarrier");
 
-                moveUp();
-                break;
+                    if (!jump_state) { // if not jumped at the moment (jump_state = false)
+                        sonic.removeClass("flip-standing");
+                        isFlipped = sonic.hasClass("flip-standing");
 
-            case 39: // right
-                sonic.removeClass("animate_onBarrier");
+                        sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+                        moveRight();
 
-                if (!jump_state) { // if not jumped at the moment (jump_state = false)
-                    sonic.removeClass("flip-standing");
-                    isFlipped = sonic.hasClass("flip-standing");
+                    } else { // up + right
+                        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                        moveUp_Right();
+                    }
 
-                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
-                    moveRight();
+                    break;
 
-                } else { // up + right
+                case 40: // down
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                    moveUp_Right();
-                }
+                    moveDown();
 
-                break;
+                    // sonic.css("top", sonic_startPosY + 10);
 
-            case 40: // down
-                sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                sonic_startPosY = sonic[0].offsetTop;
+                    break;
 
-                if (isFlipped) { // if turn back
-                    roll_backward();
+                case 66: // B
+                    sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
+                    if (isFlipped) { // if turn back
+                        boost_Left();
 
-                } else {
-                    roll_forward();
-                }
+                    } else {
+                        boost_Right();
+                    }
+                    break;
 
-                // sonic.css("top", sonic_startPosY + 10);
+                case 32: // space bar --> to jump at same position
+                    sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                    jump_OnSpaceBar();
+                    break;
 
-                break;
+                default:
+                    break;
+            }
 
-            case 66: // B
-                sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
-                if (isFlipped) { // if turn back
-                    boost_Left();
+            check_ring_collision();
+            // check_jumpPad_collision();
 
-                } else {
-                    boost_Right();
-                }
-                break;
+            switch (stage_count) {
+                case 1:
+                    check_barrier_collision(barrier1, e);
+                    break;
 
-            case 32: // space bar --> to jump at same position
-                sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                jump_OnSpaceBar();
-                break;
+                case 3:
+                    check_barrier_collision(barrier2, e);
+                    break;
 
-            default:
-                break;
-        }
+                default:
+                    break;
+            }
+        },
 
-        check_ring_collision();
-        // check_jumpPad_collision();
+        keyup: function (e) {
 
-        switch (stage_count) {
-            case 1:
-                check_barrier_collision(barrier1, e);
-                break;
+            if (e.which == 38 || e.which == 32 || e.which == 39 || e.which == 37) { // when up key is released prevent from going down from the ground level
+                // if (e.which == 38 || e.which == 32) { // when up key is released prevent from going down from the ground level
+                avoidMove_belowGroundLevel();
 
-            case 3:
-                check_barrier_collision(barrier2, e);
-                break;
+            }
 
-            default:
-                console.log("asasasasasas");
-                break;
-        }
-    },
-
-    keyup: function (e) {
-
-        if (e.which == 38 || e.which == 32 || e.which == 39 || e.which == 37) { // when up key is released prevent from going down from the ground level
-            // if (e.which == 38 || e.which == 32) { // when up key is released prevent from going down from the ground level
-            avoidMove_belowGroundLevel();
+            sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+            jump_state = false;
 
         }
+    });
+}
 
-        sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
-        jump_state = false;
-
-    }
-});
 
 $("#btn_goToMenu").click(function (e) {
     window.location.href = "index.html";
@@ -655,8 +646,39 @@ $("#btn_goToMenu").click(function (e) {
 $("#btnSound").click(function (e) {
     if (!audio1.paused) {
         audio1.pause();
+        $("#btnSound").removeClass("sound-on");
+    } else {
+        audio1.play();
+        $("#btnSound").addClass("sound-on");
+    }
+});
+
+$("#btnPause").click(function (e) {
+    $("body").css("pointer-events", "none");
+    $("#btnPause").css("pointer-events", "auto");
+    $("#btnResume").css("pointer-events", "auto");
+    $(document).off("keydown");
+
+    $("body").addClass("bg-blur");
+    $("#btnPause").addClass("pause");
+    // $("#btnPause").removeClass("bg-blur");
+    $("#btnResume").removeClass("pause");
+
+    audio1.pause();
+});
+
+$("#btnResume").click(function (e) {
+    $("body").removeClass("bg-blur");
+    $("body").css("pointer-events", "auto");
+    $("#btnPause").removeClass("pause");
+    $("#btnResume").addClass("pause");
+
+    if (audio1.paused) {
+        audio1.pause();
     } else {
         audio1.play();
     }
+
+    playGame();
 
 });
