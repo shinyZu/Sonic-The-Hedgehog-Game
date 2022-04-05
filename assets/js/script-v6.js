@@ -57,6 +57,12 @@ audio2.src = "../assets/audio/RingCollect.mp3";
 let audio3 = new Audio();
 audio3.src = "../assets/audio/GameOver2.wav";
 
+let audio4 = new Audio();
+audio4.src = "../assets/audio/GameOver.mp3";
+
+let audio5 = new Audio();
+audio5.src = "../assets/audio/ActCleared.mp3";
+
 (function () {
     hide_components();
     $("#btnSound").addClass("sound-on");
@@ -100,11 +106,13 @@ function reduce_lifeCount() {
 }
 
 function game_over() {
-    console.log("Game Over");
+    blurComponents();
+
     $("#gameOver-bg").css("display", "block");
     $("#gameOver_title-img").css("display", "block");
 
     audio1.pause();
+    audio4.play();
     $("#btnSound").removeClass("sound-on");
 
     sonic.css("display", "none");
@@ -143,13 +151,16 @@ function moveUp() {
     sonic_startPosY = sonic[0].offsetTop;
 
     if (sonic_startPosY <= 91) {
+        // if (sonic_startPosY <= 50) {
         avoidMove_atTopEdge();
     }
 
     sonic.finish().animate({
-        top: "-=20",
-        // bottom: "-=100"
+        top: "40%"
+        // top: "-=10"
     });
+
+    // sonic.addClass("moveUp");
 
     // sonic.css("top", sonic_startPosY - 10);
 
@@ -160,11 +171,30 @@ function moveRight() {
 
     if (sonic_startPosX >= 1410) {
         change_Stage();
-    }
+        // if (stage_count == 3) {
+        //     console.log("stage");
+        //     $(document).off("keydown");
+        //     $(document).off("keyup");
+        //     // sonic.animate({
+        //     //     left: "1410"
+        //     // });
+        //     sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+        //     displayPlayerResults();
+        //     score.text(final_score);
+        //     return;
+        // } else {
+        //     console.log(171);
+        //     change_Stage();
 
+        // }
+
+    }
     sonic.finish().animate({
         left: "+=10"
     });
+    // console.log("animated");
+
+
 }
 
 function moveDown() {
@@ -191,7 +221,7 @@ function moveUp_Left() {
     }
 
     sonic.finish().animate({
-        top: "-=20",
+        // top: "-=20",
         left: "-=20"
     });
 }
@@ -209,7 +239,7 @@ function moveUp_Right() {
     }
 
     sonic.finish().animate({
-        top: "-=10",
+        // top: "-=5",
         left: "+=20"
     });
 
@@ -294,6 +324,7 @@ function alt_rings() {
     }
 }
 
+var final_score;
 function displayPlayerResults() {
     // if (initial_score == 190) {
     //     console.log("Bravo");
@@ -302,19 +333,25 @@ function displayPlayerResults() {
     // } else if (initial_score >= 100 && initial_lifes < 3) {
     //     console.log("Nice Try");
     // }
-    console.log(initial_score);
 
     $(document).off("keydown");
     $(document).off("keyup");
+
+    blurComponents();
+
+    final_score = initial_score;
+    console.log("initial_score : " + initial_score);
+    console.log("final_score : " + final_score);
 
     $("#gameWin-bg").css("display", "block");
     $("#gameWin_title-img").css("display", "block");
 
     audio1.pause();
+    audio5.play();
     $("#btnSound").removeClass("sound-on");
 
     sonic.css("display", "none");
-    return;
+    // return;
 }
 
 function change_Stage() {
@@ -342,11 +379,11 @@ function change_Stage() {
             break;
 
         default:
-            displayPlayerResults();
             sonic.animate({
                 left: "1410"
             });
-            console.log(3);
+            // console.log(3);
+            displayPlayerResults();
             break;
     }
 }
@@ -414,6 +451,7 @@ function jump_OnSpaceBar() {
 
     sonic.finish().animate({
         bottom: "+=5"
+        // top: "-10"
     });
 }
 
@@ -428,7 +466,8 @@ function check_ring_collision() {
 
     sonic_collision = {
         x: x_pos,
-        y: sonic[0].offsetTop - sonic.scrollTop(),
+        // y: sonic[0].offsetTop - sonic.scrollTop(),
+        y: sonic[0].offsetTop,
         width: sonic_width,
         height: sonic_height
     };
@@ -465,16 +504,27 @@ function check_ring_collision() {
             // } else {
             //     console.log(2);
             // }
-
             console.log(initial_score);
-            if (initial_score < 190) {
-                active_ring.css("display", "none");
-                audio2.play();
-                audio2.currentTime = 0;
 
-                initial_score = initial_score + 10;
-                $(score).text(initial_score);
+            if (sonic_startPosX >= 1410) {
+                if (stage_count == 3) {
+                    final_score = initial_score;
+                    $(score).text(final_score);
+                    return;
+                }
             }
+
+            initial_score = initial_score + 10;
+            $(score).text(initial_score);
+
+            active_ring.css("display", "none");
+            audio2.play();
+            audio2.currentTime = 0;
+
+            // if (initial_score < 190) {
+
+            //     initial_score = initial_score + 10;
+            // }
         }
     }
 }
@@ -572,6 +622,7 @@ function check_barrier_collision() {
         // sonic.css("background-color", "black");
         // barrier1.css("background-color", "black");
 
+        sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
         $(document).off("keydown");
         $(document).off("keyup");
 
@@ -649,7 +700,7 @@ function playGame() {
 
                     break;
 
-                case 66: // B
+                case 83: // A
                     sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
                     if (isFlipped) { // if turn back
                         boost_Left();
@@ -694,6 +745,7 @@ function playGame() {
             }
 
             sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+            // sonic.removeClass("moveUp");
             jump_state = false;
 
         }

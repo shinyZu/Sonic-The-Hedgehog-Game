@@ -637,3 +637,46 @@ section#gameWin-bg div#gameWin_title-img {
         transform: rotate(360deg);
     }
 }
+
+.moveUp {
+    animation: moveUp 1s linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes moveUp {
+    0% {
+        background-image: url('../images/sonic_spinning.gif');
+        background-size: cover;
+        background-position: center;
+
+        top: 70%;
+    }
+
+    25% {
+        background-image: url('../images/sonic_spinning.gif');
+        background-size: cover;
+        background-position: center;
+        top: 30%;
+    }
+
+    50% {
+        background-image: url('../images/sonic_spinning.gif');
+        background-size: cover;
+        background-position: center;
+        top: 30%;
+    }
+
+    75% {
+        background-image: url('../images/sonic_spinning.gif');
+        background-size: cover;
+        background-position: center;
+        top: 50%;
+    }
+
+    100% {
+        background-image: url('../images/sonic_spinning.gif');
+        background-size: cover;
+        background-position: center;
+        top: 72%;
+    }
+}
