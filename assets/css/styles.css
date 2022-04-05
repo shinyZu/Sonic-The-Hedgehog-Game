@@ -528,7 +528,7 @@ section#gameOver-bg div#gameOver_title-img {
     height: 182px; */
     width: 80%;
     height: 55%;
-    background-image: url(../images/title_game_over.png);
+    background-image: url('../images/title_game_over.png');
     background-size: cover;
     background-position: center;
     position: absolute;
