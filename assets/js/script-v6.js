@@ -58,8 +58,7 @@ let audio3 = new Audio();
 audio3.src = "../assets/audio/GameOver2.wav";
 
 (function () {
-    $("#pause-bg").css("display", "none");
-    $("#title-img").css("display", "none");
+    hide_components();
     $("#btnSound").addClass("sound-on");
 })();
 
@@ -94,12 +93,27 @@ function reduce_lifeCount() {
     $(life).text("x " + initial_lifes);
 
     if (initial_lifes == 0) {
-        console.log("Game Over");
+        game_over();
+    } else {
+        restart_timerId = setTimeout(restartGame, 2000);
     }
 }
 
+function game_over() {
+    console.log("Game Over");
+    $("#gameOver-bg").css("display", "block");
+    $("#gameOver_title-img").css("display", "block");
+
+    audio1.pause();
+    $("#btnSound").removeClass("sound-on");
+
+    sonic.css("display", "none");
+    return;
+}
+
 function restartGame() {
-    // clearTimeout(restart_timerId);
+    clearTimeout(restart_timerId);
+    // game_over();
     audio1.currentTime = 0;
     playBgTrack();
     playGame();
@@ -133,7 +147,8 @@ function moveUp() {
     }
 
     sonic.finish().animate({
-        top: "-=30"
+        top: "-=20",
+        // bottom: "-=100"
     });
 
     // sonic.css("top", sonic_startPosY - 10);
@@ -224,7 +239,8 @@ function moveTo_InitialPosition() {
         sonic.removeClass("flip-standing");
     }
     sonic.animate({
-        left: "6%"
+        left: "6%",
+        top: "73%"
     });
 }
 
@@ -278,6 +294,29 @@ function alt_rings() {
     }
 }
 
+function displayPlayerResults() {
+    // if (initial_score == 190) {
+    //     console.log("Bravo");
+    // } else if (initial_score >= 100) {
+    //     console.log("Great Job");
+    // } else if (initial_score >= 100 && initial_lifes < 3) {
+    //     console.log("Nice Try");
+    // }
+    console.log(initial_score);
+
+    $(document).off("keydown");
+    $(document).off("keyup");
+
+    $("#gameWin-bg").css("display", "block");
+    $("#gameWin_title-img").css("display", "block");
+
+    audio1.pause();
+    $("#btnSound").removeClass("sound-on");
+
+    sonic.css("display", "none");
+    return;
+}
+
 function change_Stage() {
     switch (stage_count) {
         case 0:
@@ -303,10 +342,11 @@ function change_Stage() {
             break;
 
         default:
+            displayPlayerResults();
             sonic.animate({
                 left: "1410"
             });
-            // hideRings();
+            console.log(3);
             break;
     }
 }
@@ -417,13 +457,24 @@ function check_ring_collision() {
             // sonic.css("background-color", "black");
             // active_ring.css("background-color", "black");
 
-            active_ring.css("display", "none");
-            audio2.play();
-            audio2.currentTime = 0;
 
-            initial_score = initial_score + 10;
-            $(score).text(initial_score);
+            // if (sonic[0].offsetLeft == 1421) {
+            //     $(document).off("keydown");
+            //     $(document).off("keyup");
+            //     console.log(1);
+            // } else {
+            //     console.log(2);
+            // }
 
+            console.log(initial_score);
+            if (initial_score < 190) {
+                active_ring.css("display", "none");
+                audio2.play();
+                audio2.currentTime = 0;
+
+                initial_score = initial_score + 10;
+                $(score).text(initial_score);
+            }
         }
     }
 }
@@ -528,8 +579,8 @@ function check_barrier_collision() {
         audio3.play();
 
         sonic.addClass("animate_onBarrier");
+        // restart_timerId = setTimeout(restartGame, 2000);
         reduce_lifeCount();
-        restart_timerId = setTimeout(restartGame, 2000);
 
     } else {
         //---- Collision Not Detected
@@ -707,8 +758,9 @@ $("#btnResume").click(function (e) {
 
     remove_blur();
 
-    $("#pause-bg").css("display", "none");
-    $("#title-img").css("display", "none");
+    // $("#pause-bg").css("display", "none");
+    // $("#title-img").css("display", "none");
+    hide_components();
 
     playBgTrack();
     playGame();
@@ -721,10 +773,23 @@ $("#btnRestart").click(function (e) {
     $("#btnResume").removeClass("pause");
     $("#btnRestart").addClass("pause");
     remove_blur();
-    $("#pause-bg").css("display", "none");
-    $("#title-img").css("display", "none");
+    // $("#pause-bg").css("display", "none");
+    // $("#title-img").css("display", "none");
+    hide_components();
     initial_lifes = 3;
     life.text("x " + initial_lifes);
     restartGame();
+    sonic.css("display", "block");
 });
+
+function hide_components() {
+    $("#pause-bg").css("display", "none");
+    $("#title-img").css("display", "none");
+
+    $("#gameOver-bg").css("display", "none");
+    $("#gameOver_title-img").css("display", "none");
+
+    $("#gameWin-bg").css("display", "none");
+    $("#gameWin_title-img").css("display", "none");
+}
 
