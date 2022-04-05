@@ -66,6 +66,7 @@ audio5.src = "../assets/audio/ActCleared.mp3";
 (function () {
     hide_components();
     $("#btnSound").addClass("sound-on");
+    barrier1.css("display", "none");
 })();
 
 function playBgTrack() {
@@ -326,6 +327,7 @@ function change_Stage() {
     switch (stage_count) {
         case 0:
             gameStage.css("margin-left", "-100%").css("transition", "all 1s ease");
+            barrier1.css("display", "block");
             moveTo_InitialPosition();
             setTimeout(showRings, 800);
             stage_count++;
@@ -333,6 +335,7 @@ function change_Stage() {
 
         case 1:
             gameStage.css("margin-left", "-200%").css("transition", "all 1s ease");
+            barrier1.css("display", "none");
             moveTo_InitialPosition();
             setTimeout(showRings, 800);
             // hideRings(2);
@@ -341,12 +344,14 @@ function change_Stage() {
 
         case 2:
             gameStage.css("margin-left", "-300%").css("transition", "all 1s ease");
+            barrier1.css("display", "none");
             moveTo_InitialPosition();
             stage_count++;
             setTimeout(showRings(1), 800);
             break;
 
         default:
+            barrier1.css("display", "none");
             sonic.animate({
                 left: "1410"
             });
