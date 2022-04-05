@@ -445,8 +445,10 @@ div#game-controls>button#btnRestart {
 
 section#pause-bg {
     /* border: 2px solid red; */
-    width: 450px;
-    height: 450px;
+    /* width: 450px;
+    height: 450px; */
+    width: 20%;
+    height: 60%;
     background-image: url('../images/sonic_pause.png');
     background-size: cover;
     background-position: center;
@@ -460,16 +462,18 @@ section#pause-bg {
 
 section#pause-bg div#title-img {
     /* border: 2px solid red; */
-    width: 400px;
-    height: 200px;
+    /* width: 400px;
+    height: 200px; */
+    width: 120%;
+    height: 56%;
     background-image: url('../images/menu/title.png');
     background-size: cover;
     background-position: center;
     /* position: relative;
     top: 140px; */
     position: absolute;
-    top: 185px;
-    left: 0;
+    top: 40%;
+    left: -13%;
     right: 0;
     bottom: 0;
     margin: auto;
@@ -480,8 +484,10 @@ section#pause-bg div#title-img {
 
 section#gameOver-bg {
     /* border: 2px solid red; */
-    width: 450px;
-    height: 450px;
+    /* width: 450px;
+    height: 450px; */
+    width: 30%;
+    height: 62%;
     background-image: url('../images/sonic_gameOver.png');
     background-size: cover;
     background-position: center;
@@ -518,14 +524,18 @@ section#gameOver-bg {
 
 section#gameOver-bg div#gameOver_title-img {
     /* border: 2px solid red; */
-    width: 314px;
-    height: 182px;
+    /* width: 314px;
+    height: 182px; */
+    width: 80%;
+    height: 55%;
     background-image: url(../images/title_game_over.png);
     background-size: cover;
     background-position: center;
     position: absolute;
-    top: 142px;
-    left: 0px;
+    /* top: 142px; */
+    /* left: 0px; */
+    top: 26%;
+    left: 6%;
     right: 0;
     bottom: 0;
     margin: auto;

@@ -121,7 +121,6 @@ function game_over() {
 
 function restartGame() {
     clearTimeout(restart_timerId);
-    // game_over();
     audio1.currentTime = 0;
     playBgTrack();
     playGame();
@@ -151,7 +150,6 @@ function moveUp() {
     sonic_startPosY = sonic[0].offsetTop;
 
     if (sonic_startPosY <= 91) {
-        // if (sonic_startPosY <= 50) {
         avoidMove_atTopEdge();
     }
 
@@ -169,32 +167,14 @@ function moveUp() {
 function moveRight() {
     sonic_startPosX = sonic[0].offsetLeft;
 
-    if (sonic_startPosX >= 1410) {
+    // if (sonic_startPosX >= 1410) {
+    if (sonic_startPosX >= screen.availWidth) {
         change_Stage();
-        // if (stage_count == 3) {
-        //     console.log("stage");
-        //     $(document).off("keydown");
-        //     $(document).off("keyup");
-        //     // sonic.animate({
-        //     //     left: "1410"
-        //     // });
-        //     sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
-        //     displayPlayerResults();
-        //     score.text(final_score);
-        //     return;
-        // } else {
-        //     console.log(171);
-        //     change_Stage();
-
-        // }
-
     }
+
     sonic.finish().animate({
         left: "+=10"
     });
-    // console.log("animated");
-
-
 }
 
 function moveDown() {
@@ -230,7 +210,8 @@ function moveUp_Right() {
     sonic_startPosY = sonic[0].offsetTop;
     sonic_startPosX = sonic[0].offsetLeft;
 
-    if (sonic[0].offsetLeft >= 1410) {
+    // if (sonic[0].offsetLeft >= 1410) {
+    if (sonic[0].offsetLeft >= screen.availWidth) {
         change_Stage();
     }
 
@@ -324,24 +305,12 @@ function alt_rings() {
     }
 }
 
-var final_score;
 function displayPlayerResults() {
-    // if (initial_score == 190) {
-    //     console.log("Bravo");
-    // } else if (initial_score >= 100) {
-    //     console.log("Great Job");
-    // } else if (initial_score >= 100 && initial_lifes < 3) {
-    //     console.log("Nice Try");
-    // }
 
     $(document).off("keydown");
     $(document).off("keyup");
 
     blurComponents();
-
-    final_score = initial_score;
-    console.log("initial_score : " + initial_score);
-    console.log("final_score : " + final_score);
 
     $("#gameWin-bg").css("display", "block");
     $("#gameWin_title-img").css("display", "block");
@@ -351,7 +320,6 @@ function displayPlayerResults() {
     $("#btnSound").removeClass("sound-on");
 
     sonic.css("display", "none");
-    // return;
 }
 
 function change_Stage() {
@@ -391,7 +359,8 @@ function change_Stage() {
 function roll_forward() {
     sonic_startPosX = sonic[0].offsetLeft;
 
-    if (sonic[0].offsetLeft >= 1410) {
+    // if (sonic[0].offsetLeft >= 1410) {
+    if (sonic[0].offsetLeft >= screen.availWidth) {
         change_Stage();
     }
 
@@ -430,7 +399,8 @@ function boost_Left() {
 function boost_Right() {
     sonic_startPosX = sonic[0].offsetLeft;
 
-    if (sonic_startPosX >= 1410) {
+    // if (sonic_startPosX >= 1410) {
+    if (sonic_startPosX >= screen.availWidth) {
         change_Stage();
     }
 
@@ -496,17 +466,7 @@ function check_ring_collision() {
             // sonic.css("background-color", "black");
             // active_ring.css("background-color", "black");
 
-
-            // if (sonic[0].offsetLeft == 1421) {
-            //     $(document).off("keydown");
-            //     $(document).off("keyup");
-            //     console.log(1);
-            // } else {
-            //     console.log(2);
-            // }
-            console.log(initial_score);
-
-            if (sonic_startPosX >= 1410) {
+            if (sonic_startPosX >= screen.availWidth) {
                 if (stage_count == 3) {
                     final_score = initial_score;
                     $(score).text(final_score);
@@ -520,11 +480,6 @@ function check_ring_collision() {
             active_ring.css("display", "none");
             audio2.play();
             audio2.currentTime = 0;
-
-            // if (initial_score < 190) {
-
-            //     initial_score = initial_score + 10;
-            // }
         }
     }
 }
