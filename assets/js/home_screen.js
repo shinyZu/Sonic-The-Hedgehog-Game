@@ -22,12 +22,14 @@ $("#btnPlay").click(function (e) {
 
 $("#help-icon").click(function (e) {
     $("#help").css("display", "block");
-    $("div#controller-icons>button#help-icon").addClass("pressed");
     $("div#controller-icons>button#help-icon").css("pointer-events", "none");
+    $("#home-bg").addClass("bg-blur");
+    $("div#controller-icons>button#help-icon").addClass("pressed");
 });
 
 $("#btnClose").click(function (e) {
     $("#help").css("display", "none");
-    $("div#controller-icons>button#help-icon").removeClass("pressed");
     $("div#controller-icons>button#help-icon").css("pointer-events", "auto");
+    $("#home-bg").removeClass("bg-blur")
+    $("div#controller-icons>button#help-icon").removeClass("pressed");
 });

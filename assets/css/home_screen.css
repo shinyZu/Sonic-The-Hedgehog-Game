@@ -175,3 +175,10 @@ section#help button#btnClose:hover {
     width: 12%;
     height: 12%;
 }
+
+/* ---------------------------------------------------------- */
+
+.bg-blur {
+    filter: blur(8px);
+    -webkit-filter: blur(2px);
+}
