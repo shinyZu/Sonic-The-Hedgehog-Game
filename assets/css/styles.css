@@ -71,9 +71,9 @@ div#sonic.flip-standing {
 }
 
 div#sonic {
+    /* border: 2px solid blue; */
     width: 180px;
     height: 250px;
-    /* border: 2px solid blue; */
     background-image: url('../images/sonic_standing.gif');
     background-position: center;
     background-size: cover;
@@ -143,37 +143,11 @@ div#sonic_spin {
 
 /* ------------------------------Rings-------------------------------- */
 
-/* div#ring {
-    width: 130px;
-    height: 90px;
-    border: 2px solid red;
-    position: absolute;
-    top: 170px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    background-image: url('../images/ring3.gif');
-    background-position: center;
-    background-size: cover;
-} */
-
-/* .ring-container {
-    border: 2px solid chocolate;
-    width: 50%;
-    height: 300px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 73%;
-    left: 50%;
-    display: flex;
-    justify-content: space-evenly;
-} */
 
 div.ring {
+    /* border: 2px solid red; */
     width: 100px;
     height: 100px;
-    /* border: 2px solid red; */
     background-image: url('../images/ring3.gif');
     background-position: center;
     background-size: cover;

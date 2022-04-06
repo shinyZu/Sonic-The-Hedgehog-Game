@@ -45,6 +45,7 @@ var x_pos;
 
 var barrier_boundingRect = barrier1[0].getBoundingClientRect();
 var sonic_boundingRect = sonic[0].getBoundingClientRect();
+var active_ring_boundingRect = ring1[0].getBoundingClientRect();
 
 let audio1 = new Audio();
 audio1.src = "../assets/audio/BridgeZone.mp3";
@@ -421,52 +422,54 @@ function jump_OnSpaceBar() {
     sonic_startPosY = sonic[0].offsetTop;
 
     if (sonic[0].offsetLeft >= 0) {
+        // if (sonic[0].offsetLeft <= 90) {
         avoidMove_atTopEdge();
     }
 
     sonic.finish().animate({
         bottom: "+=5"
-        // top: "-10"
+        // top: "10%"
     });
 }
 
 function check_ring_collision() {
-    var x_pos;
-    if (!isFlipped) { // if moving to right
-        x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 591 - 721;
-
-    } else { // if moving to left
-        x_pos = sonic[0].offsetLeft - sonic.scrollLeft() + 80;// 571 - 706
-    }
-
     sonic_collision = {
-        x: x_pos,
-        // y: sonic[0].offsetTop - sonic.scrollTop(),
+        x: sonic[0].offsetLeft,
         y: sonic[0].offsetTop,
         width: sonic_width,
-        height: sonic_height
+        height: sonic_boundingRect.height,
+        right: sonic_boundingRect.right
     };
 
     for (let i in ring_array) {
         active_ring = ring_array[i]
+        active_ring_boundingRect = active_ring[0].getBoundingClientRect();
 
         ring_collision = {
-            x: active_ring[0].offsetLeft - active_ring.scrollLeft(),
-            y: active_ring[0].offsetTop - active_ring.scrollTop(),
+            x: active_ring[0].offsetLeft,
+            y: active_ring[0].offsetTop,
             width: ring_width,
-            height: ring_height
+            height: ring_height,
+            right: active_ring_boundingRect.right + 90,
+            left: active_ring_boundingRect.left
         };
 
-        if (sonic_collision.x > ring_collision.x + ring_collision.width ||
-            sonic_collision.x + sonic_width < ring_collision.x ||
-            sonic_collision.y > ring_collision.y + ring_collision.height ||
-            sonic_collision.y + sonic_collision.height < ring_collision.y) {
+        // console.log("");
+        // console.log(sonic_collision.x < ring_collision.x + ring_collision.width);
+        // console.log(sonic_collision.x + sonic_collision.width > ring_collision.x);
+        // console.log(sonic_collision.y < ring_collision.y + ring_collision.height);
+        // console.log(sonic_collision.y + sonic_collision.height > ring_collision.y);
 
-            // console.log("NO Collision Detected");
-            // sonic.css("background-color", "blue");
-            // active_ring.css("background-color", "red");
+        // console.log(sonic_collision.x + " : " + (ring_collision.x + ring_collision.width));
+        // console.log((sonic_collision.x + sonic_collision.width) + " : " + ring_collision.x);
+        // console.log(sonic_collision.y + " : " + (ring_collision.y + ring_collision.height));
+        // console.log((sonic_collision.y + sonic_collision.height) + " : " + ring_collision.y);
 
-        } else {
+        if (sonic_collision.x < ring_collision.right &&
+            sonic_collision.x + sonic_collision.width > ring_collision.right &&
+            sonic_collision.y < ring_collision.y + ring_collision.height &&
+            sonic_collision.y + sonic_collision.height > ring_collision.y) {
+
             // console.log("Collision Detected");
             // sonic.css("background-color", "black");
             // active_ring.css("background-color", "black");
@@ -485,6 +488,12 @@ function check_ring_collision() {
             active_ring.css("display", "none");
             audio2.play();
             audio2.currentTime = 0;
+
+        } else {
+
+            // console.log("NO Collision Detected");
+            // sonic.css("background-color", "blue");
+            // active_ring.css("background-color", "red");
         }
     }
 }

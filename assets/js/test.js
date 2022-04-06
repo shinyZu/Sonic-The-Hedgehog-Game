@@ -313,3 +313,64 @@ function check_barrier_collision(barrier, event) {
     // }
 
 }
+
+///////////////////////////////1st Attempt/////////////////////////////////////
+
+function check_ring_collision() {
+    var x_pos;
+    if (!isFlipped) { // if moving to right
+        x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 591 - 721;
+
+    } else { // if moving to left
+        x_pos = sonic[0].offsetLeft - sonic.scrollLeft() + 80;// 571 - 706
+    }
+
+    sonic_collision = {
+        x: x_pos,
+        // y: sonic[0].offsetTop - sonic.scrollTop(),
+        y: sonic[0].offsetTop,
+        width: sonic_width,
+        height: sonic_height
+    };
+
+    for (let i in ring_array) {
+        active_ring = ring_array[i]
+
+        ring_collision = {
+            x: active_ring[0].offsetLeft - active_ring.scrollLeft(),
+            y: active_ring[0].offsetTop - active_ring.scrollTop(),
+            width: ring_width,
+            height: ring_height
+        };
+
+        if (sonic_collision.x > ring_collision.x + ring_collision.width ||
+            sonic_collision.x + sonic_width < ring_collision.x ||
+            sonic_collision.y > ring_collision.y + ring_collision.height ||
+            sonic_collision.y + sonic_collision.height < ring_collision.y) {
+
+            // console.log("NO Collision Detected");
+            // sonic.css("background-color", "blue");
+            // active_ring.css("background-color", "red");
+
+        } else {
+            // console.log("Collision Detected");
+            // sonic.css("background-color", "black");
+            // active_ring.css("background-color", "black");
+
+            if (sonic_startPosX >= screen.availWidth) {
+                if (stage_count == 3) {
+                    final_score = initial_score;
+                    $(score).text(final_score);
+                    return;
+                }
+            }
+
+            initial_score = initial_score + 10;
+            $(score).text(initial_score);
+
+            active_ring.css("display", "none");
+            audio2.play();
+            audio2.currentTime = 0;
+        }
+    }
+}
