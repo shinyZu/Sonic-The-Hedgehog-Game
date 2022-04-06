@@ -13,14 +13,11 @@ section#bg-container1>section#bg-container2 {
     display: flex;
     height: 100vh;
     width: 400%;
-    /* position: absolute; */
 }
 
 section#bg-container1>section#bg-container2>div.bg {
     /* border: 2px solid blue; */
     width: 100%;
-
-    /* display: flex; */
     background-image: url('../images/bg.jpg');
     background-size: cover;
     background-position: center;
@@ -32,35 +29,6 @@ div#sonic.flip-standing {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1) translate(50%, -50%);
 }
-
-/* .initial_position{
-    position: absolute;
-    top: 65%;
-    left: 0;
-    bottom: 190px;
-    margin: auto;
-} */
-
-/* div#sonic { */
-/* width: 180px;
-    height: 250px;
-    position: absolute;
-    top: 65%;
-    left: 0;
-    bottom: 190px;
-    margin: auto;
-    background-image: url('../images/sonic_standing.gif');
-    background-position: center;
-    background-size: cover; */
-
-/* width: 238px; */
-/* top: 500px; */
-/* top: 0; */
-/* background-image: url('../images/sonic_waiting.gif'); */
-/* -webkit-transform: scaleX(-1);
-    transform: scaleX(-1); */
-/* z-index: 1; */
-/* } */
 
 .sonic_top {
     top: 72%;
@@ -79,17 +47,13 @@ div#sonic {
     background-size: cover;
     position: absolute;
     transform: translate(-50%, -50%);
-    /* top: 72%; */
     left: 6%;
-    /* z-index: 1; */
 }
 
 div#sonic_stand {
     width: 200px;
     height: 250px;
     position: absolute;
-    /* top: 500px; */
-    /* top: 72%; */
     left: 0;
     bottom: 45px;
     margin: auto;
@@ -102,8 +66,6 @@ div#sonic_walk {
     width: 200px;
     height: 250px;
     position: absolute;
-    /* top: 500px; */
-    /* top: 72%; */
     left: 250px;
     bottom: 45px;
     margin: auto;
@@ -116,8 +78,6 @@ div#sonic_run {
     width: 200px;
     height: 250px;
     position: absolute;
-    /* top: 500px; */
-    /* top: 72%; */
     left: 500px;
     bottom: 45px;
     margin: auto;
@@ -128,11 +88,8 @@ div#sonic_run {
 
 div#sonic_spin {
     width: 200px;
-    /* width: 180px; */
     height: 250px;
     position: absolute;
-    /* top: 500px; */
-    /* top: 72%; */
     left: 750px;
     bottom: 45px;
     margin: auto;
@@ -164,17 +121,14 @@ div.ring {
 }
 
 div#ring1 {
-    /* top: 73%; */
     left: 20%;
 }
 
 div#ring2 {
-    /* top: 73%; */
     left: 35%;
 }
 
 div#ring3 {
-    /* top: 73%; */
     left: 50%;
 }
 
@@ -184,24 +138,14 @@ div#ring4 {
 }
 
 div#ring5 {
-    /* top: 73%; */
     left: 80%;
 }
 
 /* ------------------------------Barriers-------------------------------- */
 
-section#bg-container1 {
-    /* border: 5px solid yellow; */
-}
-
-section#bg-container1>section#bg-container2 {
-    /* border: 8px solid red; */
-}
-
 section#bg-container1>section#bg-container2>div.bg>div.level {
     /* border: 2px solid purple; */
     height: 350px;
-
 }
 
 section#bg-container1>section#bg-container2>div.bg>div.level#level1_1,
@@ -210,13 +154,11 @@ section#bg-container1>section#bg-container2>div.bg>div.level#level2_2 {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    /* overflow: hidden; */
 }
 
 section#bg-container1>section#bg-container2>div.bg>div.level#level1_1>div#jump_pad1 {
     /* border: 5px solid rgb(183, 38, 219); */
     position: absolute;
-    /* top: 0; */
     width: 490px;
     height: 135px;
     background-image: url("../images/jump_pads/jump_pad1.png");
@@ -250,29 +192,13 @@ section#bg-container1>section#bg-container2>div.bg:nth-child(4)>div.level#level2
     background-image: url("../images/barriers/jump_pad_danger4.png");
     background-size: cover;
     background-position: center;
-
-
-
-    /* 
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 10%;
-    width: 330px;
-    height: 100px;
-    background-image: url("../images/barriers/jump_pad_danger4.png");
-    background-size: cover;
-    background-position: center; */
-
 }
 
 /* ------------------------------Animations-------------------------------- */
 
 .animate_onBarrier {
     animation: 0.5s blink_sonic alternate;
-    /* animation-name: blink_sonic;
-    animation-duration: 0.5s; */
     animation-iteration-count: 5;
-    /* animation-direction: alternate; */
 }
 
 @keyframes blink_sonic {
@@ -297,12 +223,12 @@ section#bg-container1>section#bg-container2>div.bg:nth-child(4)>div.level#level2
     }
 }
 
-/* ------------------------------Score_life_info-------------------------------- */
+/* ------------------------------Score, Life Info-------------------------------- */
 
 div#score-img {
+    /* border: 5px solid red; */
     width: 45px;
     height: 42px;
-    /* border: 5px solid red; */
     position: absolute;
     top: 20px;
     left: 22px;
@@ -320,9 +246,9 @@ div#score-img>p#score {
 }
 
 div#life-img {
+    /* border: 5px solid red; */
     width: 102px;
     height: 50px;
-    /* border: 5px solid red; */
     position: absolute;
     top: 80px;
     left: 0px;
@@ -356,7 +282,6 @@ div#game-controls {
 div#game-controls>button {
     /* border: 2px solid blue; */
     width: 70px;
-    /* height: 70px; */
     background: transparent;
     border: none;
     cursor: pointer;
@@ -369,14 +294,12 @@ div#game-controls>button:hover {
 }
 
 div#game-controls>button#btnSound {
-    /* background: transparent; */
     background-image: url("../images/menu/sound.png");
     background-size: cover;
     background-position: center;
 }
 
 div#game-controls>button#btn_goToMenu {
-    /* background: transparent; */
     background-image: url("../images/menu/menu2.png");
     background-size: cover;
     background-position: center;
@@ -419,8 +342,6 @@ div#game-controls>button#btnRestart {
 
 section#pause-bg {
     /* border: 2px solid red; */
-    /* width: 450px;
-    height: 450px; */
     width: 20%;
     height: 60%;
     background-image: url('../images/sonic_pause.png');
@@ -436,15 +357,11 @@ section#pause-bg {
 
 section#pause-bg div#title-img {
     /* border: 2px solid red; */
-    /* width: 400px;
-    height: 200px; */
     width: 120%;
     height: 56%;
     background-image: url('../images/menu/title.png');
     background-size: cover;
     background-position: center;
-    /* position: relative;
-    top: 140px; */
     position: absolute;
     top: 40%;
     left: -13%;
@@ -458,8 +375,6 @@ section#pause-bg div#title-img {
 
 section#gameOver-bg {
     /* border: 2px solid red; */
-    /* width: 450px;
-    height: 450px; */
     width: 30%;
     height: 62%;
     background-image: url('../images/sonic_gameOver.png');
@@ -498,16 +413,12 @@ section#gameOver-bg {
 
 section#gameOver-bg div#gameOver_title-img {
     /* border: 2px solid red; */
-    /* width: 314px;
-    height: 182px; */
     width: 80%;
     height: 55%;
     background-image: url('../images/title_game_over.png');
     background-size: cover;
     background-position: center;
     position: absolute;
-    /* top: 142px; */
-    /* left: 0px; */
     top: 26%;
     left: 6%;
     right: 0;

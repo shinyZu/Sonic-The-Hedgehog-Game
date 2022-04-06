@@ -1,5 +1,3 @@
-// hope to be the final 
-
 let sonic = $("#sonic");
 
 let rings = $(".ring");
@@ -71,11 +69,6 @@ audio5.src = "../assets/audio/ActCleared.mp3";
 })();
 
 function playBgTrack() {
-    // if (audio1.paused) {
-    //     audio1.pause();
-    // } else {
-    //     audio1.play();
-    // } 
     if ($("#btnSound").hasClass("sound-on")) {
         audio1.play();
     } else {
@@ -136,55 +129,65 @@ function restartGame() {
     $(score).text("0" + initial_score);
 }
 
-// function moveLeft() {
-//     sonic_startPosX = sonic[0].offsetLeft;
+/* ----------------------------------------------------S Key, Space Bar & Arrow Keys-------------------------------------------------------------------------- */
 
-//     if (sonic_startPosX <= 90) {
-//         avoidMove_atLeftEdge();
-//     }
+function moveUp() {
+    sonic_startPosY = sonic[0].offsetTop;
 
-//     sonic.finish().animate({
-//         left: "-=10"
-//     });
-// }
+    if (keys["ArrowRight"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Right();
 
-/*----------------------------------------------- */
+    } else if (keys["ArrowLeft"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Left();
+    }
 
-// function moveUp() {
-//     sonic_startPosY = sonic[0].offsetTop;
+    if (sonic_startPosY <= 91) {
+        avoidMove_atTopEdge();
+    }
 
-//     if (sonic_startPosY <= 91) {
-//         avoidMove_atTopEdge();
-//     }
+    sonic.finish().animate({
+        top: "40%"
+    });
 
-//     sonic.finish().animate({
-//         top: "40%"
-//     });
+    // sonic.css("top", sonic_startPosY - 10);
+}
 
-//     // sonic.css("top", sonic_startPosY - 10);
-// }
+function moveRight() {
+    sonic_startPosX = sonic[0].offsetLeft;
 
-/*----------------------------------------------- */
+    if (keys["ArrowUp"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Right();
+    }
 
-// function moveRight() {
-//     sonic_startPosX = sonic[0].offsetLeft;
+    if (sonic_startPosX >= screen.availWidth) {
+        change_Stage();
+        moveTo_InitialPosition();
+    }
 
-//     // console.log(keys);
+    sonic.finish().animate({
+        left: "+=10"
+    });
+}
 
-//     // if (keys["ArrowRight"] && keys["ArrowUp"]) {
-//     //     console.log(2222222222222222222);
-//     // }
+function moveLeft() {
+    sonic_startPosX = sonic[0].offsetLeft;
 
-//     // if (sonic_startPosX >= 1410) {
-//     if (sonic_startPosX >= screen.availWidth) {
-//         change_Stage();
-//         moveTo_InitialPosition();
-//     }
+    if (keys["ArrowUp"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Left();
+    }
 
-//     sonic.finish().animate({
-//         left: "+=10"
-//     });
-// }
+    if (sonic_startPosX <= 90) {
+        avoidMove_atLeftEdge();
+    }
+
+    sonic.finish().animate({
+        left: "-=10"
+    });
+}
 
 function moveDown() {
     sonic_startPosY = sonic[0].offsetTop;
@@ -216,8 +219,6 @@ function moveUp_Left() {
 }
 
 function moveUp_Right() {
-    // sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-
     sonic_startPosY = sonic[0].offsetTop;
     sonic_startPosX = sonic[0].offsetLeft;
 
@@ -233,139 +234,6 @@ function moveUp_Right() {
         // left: "+=20"
         left: "+=10"
     });
-}
-
-function avoidMove_atLeftEdge() {
-    sonic.animate({
-        left: "6%"
-    });
-}
-
-function avoidMove_atTopEdge() {
-    sonic.finish().animate({
-        top: "13%"
-    });
-}
-
-function avoidMove_belowGroundLevel() {
-    sonic.finish().animate({
-        top: "72%"
-    });
-}
-
-function moveTo_InitialPosition() {
-    sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
-    if (isFlipped) {
-        sonic.removeClass("flip-standing");
-    }
-    sonic.animate({
-        left: "6%",
-        top: "73%"
-    });
-}
-
-function showRings() {
-    for (let i in ring_array) {
-        ring_array[i].css("display", "block").css("transition", "all 1s ease");
-        alt_rings();
-    }
-}
-
-// function hideRings(index) {
-//     ring_array[index].css("display", "none");
-// }
-
-// function remove_altRing_class() {
-//     for (let i in ring_array) {
-//         ring_array[i].removeClass(".alt_ring");
-//     }
-// }
-
-function alt_rings() {
-    switch (stage_count) {
-        case 0:
-            // console.log("stage count is 0 : " + stage_count);
-            ring_array[2].removeClass("ring_top");
-            ring_array[2].addClass("alt_ring_top");
-            break;
-
-        case 1:
-            // console.log("stage count is 1 : " + stage_count);
-            ring_array[1].css("left", "30%");
-            ring_array[2].css("display", "none");
-            ring_array[3].css("left", "75%");
-            ring_array[4].css("left", "90%");
-            break;
-
-        case 2:
-            // console.log("stage count is 2 : " + stage_count);
-            ring_array[4].removeClass("ring_top");
-            ring_array[4].addClass("alt_ring_top");
-            break;
-
-        case 3:
-            // console.log("stage count is 3 : " + stage_count);
-            ring_array[1].removeClass("ring_top");
-            ring_array[1].addClass("alt_ring_top");
-            break;
-
-        default:
-            break;
-    }
-}
-
-function displayPlayerResults() {
-
-    $(document).off("keydown");
-    $(document).off("keyup");
-
-    blurComponents();
-
-    $("#gameWin-bg").css("display", "block");
-    $("#gameWin_title-img").css("display", "block");
-
-    audio1.pause();
-    audio5.play();
-    $("#btnSound").removeClass("sound-on");
-
-    sonic.css("display", "none");
-}
-
-function change_Stage() {
-    switch (stage_count) {
-        case 0:
-            gameStage.css("margin-left", "-100%").css("transition", "all 1s ease");
-            barrier1.css("display", "block");
-            moveTo_InitialPosition();
-            setTimeout(showRings, 800);
-            stage_count++;
-            break;
-
-        case 1:
-            gameStage.css("margin-left", "-200%").css("transition", "all 1s ease");
-            barrier1.css("display", "none");
-            moveTo_InitialPosition();
-            setTimeout(showRings, 800);
-            // hideRings(2);
-            stage_count++;
-            break;
-
-        case 2:
-            gameStage.css("margin-left", "-300%").css("transition", "all 1s ease");
-            barrier1.css("display", "none");
-            moveTo_InitialPosition();
-            stage_count++;
-            setTimeout(showRings(1), 800);
-            break;
-
-        default:
-            barrier1.css("display", "none");
-            sonic.animate({
-                left: "1410"
-            });
-            displayPlayerResults();
-            break;
-    }
 }
 
 function roll_forward() {
@@ -438,6 +306,133 @@ function jump_OnSpaceBar() {
     });
 }
 
+/* ---------------------------------------------------------------------------------------------------------------------------------------- */
+
+function avoidMove_atLeftEdge() {
+    sonic.animate({
+        left: "6%"
+    });
+}
+
+function avoidMove_atTopEdge() {
+    sonic.finish().animate({
+        top: "13%"
+    });
+}
+
+function avoidMove_belowGroundLevel() {
+    sonic.finish().animate({
+        top: "72%"
+    });
+}
+
+function moveTo_InitialPosition() {
+    sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+    if (isFlipped) {
+        sonic.removeClass("flip-standing");
+    }
+    sonic.animate({
+        left: "6%",
+        top: "73%"
+    });
+}
+
+function change_Stage() {
+    switch (stage_count) {
+        case 0:
+            gameStage.css("margin-left", "-100%").css("transition", "all 1s ease");
+            barrier1.css("display", "block");
+            moveTo_InitialPosition();
+            setTimeout(showRings, 800);
+            stage_count++;
+            break;
+
+        case 1:
+            gameStage.css("margin-left", "-200%").css("transition", "all 1s ease");
+            barrier1.css("display", "none");
+            moveTo_InitialPosition();
+            setTimeout(showRings, 800);
+            // hideRings(2);
+            stage_count++;
+            break;
+
+        case 2:
+            gameStage.css("margin-left", "-300%").css("transition", "all 1s ease");
+            barrier1.css("display", "none");
+            moveTo_InitialPosition();
+            stage_count++;
+            setTimeout(showRings(1), 800);
+            break;
+
+        default:
+            barrier1.css("display", "none");
+            sonic.animate({
+                left: "1410"
+            });
+            displayPlayerResults();
+            break;
+    }
+}
+
+function displayPlayerResults() {
+
+    $(document).off("keydown");
+    $(document).off("keyup");
+
+    blurComponents();
+
+    $("#gameWin-bg").css("display", "block");
+    $("#gameWin_title-img").css("display", "block");
+
+    audio1.pause();
+    audio5.play();
+    $("#btnSound").removeClass("sound-on");
+
+    sonic.css("display", "none");
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------- */
+
+function showRings() {
+    for (let i in ring_array) {
+        ring_array[i].css("display", "block").css("transition", "all 1s ease");
+        alt_rings();
+    }
+}
+
+function alt_rings() {
+    switch (stage_count) {
+        case 0:
+            // console.log("stage count is 0 : " + stage_count);
+            ring_array[2].removeClass("ring_top");
+            ring_array[2].addClass("alt_ring_top");
+            break;
+
+        case 1:
+            // console.log("stage count is 1 : " + stage_count);
+            ring_array[1].css("left", "30%");
+            ring_array[2].css("display", "none");
+            ring_array[3].css("left", "75%");
+            ring_array[4].css("left", "90%");
+            break;
+
+        case 2:
+            // console.log("stage count is 2 : " + stage_count);
+            ring_array[4].removeClass("ring_top");
+            ring_array[4].addClass("alt_ring_top");
+            break;
+
+        case 3:
+            // console.log("stage count is 3 : " + stage_count);
+            ring_array[1].removeClass("ring_top");
+            ring_array[1].addClass("alt_ring_top");
+            break;
+
+        default:
+            break;
+    }
+}
+
 function check_ring_collision() {
     sonic_collision = {
         x: sonic[0].offsetLeft,
@@ -459,17 +454,6 @@ function check_ring_collision() {
             right: active_ring_boundingRect.right + 90,
             left: active_ring_boundingRect.left
         };
-
-        // console.log("");
-        // console.log(sonic_collision.x < ring_collision.x + ring_collision.width);
-        // console.log(sonic_collision.x + sonic_collision.width > ring_collision.x);
-        // console.log(sonic_collision.y < ring_collision.y + ring_collision.height);
-        // console.log(sonic_collision.y + sonic_collision.height > ring_collision.y);
-
-        // console.log(sonic_collision.x + " : " + (ring_collision.x + ring_collision.width));
-        // console.log((sonic_collision.x + sonic_collision.width) + " : " + ring_collision.x);
-        // console.log(sonic_collision.y + " : " + (ring_collision.y + ring_collision.height));
-        // console.log((sonic_collision.y + sonic_collision.height) + " : " + ring_collision.y);
 
         if (sonic_collision.x < ring_collision.right &&
             sonic_collision.x + sonic_collision.width > ring_collision.right &&
@@ -501,50 +485,6 @@ function check_ring_collision() {
             // sonic.css("background-color", "blue");
             // active_ring.css("background-color", "red");
         }
-    }
-}
-
-function check_jumpPad_collision() {
-    // var x_pos;
-    // if (!isFlipped) { // if moving to right
-    //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 591 - 721;
-
-    // } else { // if moving to left
-    //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() + 80;// 571 - 706
-    // }
-
-    // sonic_collision = {
-    //     x: x_pos,
-    //     y: sonic[0].offsetTop - sonic.scrollTop(),
-    //     width: sonic_width,
-    //     height: sonic_height
-    // };
-
-    jump_pad_collision = {
-        x: jump_pad1[0].offsetLeft - jump_pad1.scrollLeft(),
-        y: jump_pad1[0].offsetTop - jump_pad1.scrollTop(),
-        width: jump_pad1.outerWidth(),
-        height: jump_pad1.outerHeight()
-    }
-
-    if (sonic_collision.x > jump_pad_collision.x + jump_pad_collision.width ||
-        sonic_collision.x + sonic_width < jump_pad_collision.x ||
-        sonic_collision.y > jump_pad_collision.y + jump_pad_collision.height ||
-        sonic_collision.y + sonic_collision.height < jump_pad_collision.y) {
-
-        // console.log("NO Collision Detected");
-        // sonic.css("background-color", "blue");
-        // jump_pad1.css("background-color", "red");
-
-    } else {
-        // console.log("Collision Detected");
-        // jump_pad1.css("display", "none");
-        // sonic.css("background-color", "black");
-        // jump_pad1.css("background-color", "black");
-
-        // sonic.removeClass("sonic_top");
-        // sonic.addClass("sonic_alt_top");
-        // sonic.css("top", sonic_collision.x);
     }
 }
 
@@ -615,196 +555,54 @@ function check_barrier_collision() {
     }
 }
 
-var timerId = setInterval(playGame, 100);
+// function check_jumpPad_collision() {
+//     // var x_pos;
+//     // if (!isFlipped) { // if moving to right
+//     //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() - 130; // 591 - 721;
 
-var keys = {};
-var move_state = false;
+//     // } else { // if moving to left
+//     //     x_pos = sonic[0].offsetLeft - sonic.scrollLeft() + 80;// 571 - 706
+//     // }
 
-// function playGame() {
-//     clearInterval(timerId);
+//     // sonic_collision = {
+//     //     x: x_pos,
+//     //     y: sonic[0].offsetTop - sonic.scrollTop(),
+//     //     width: sonic_width,
+//     //     height: sonic_height
+//     // };
 
-//     $(document).on({
-//         keydown: function (e) {
+//     jump_pad_collision = {
+//         x: jump_pad1[0].offsetLeft - jump_pad1.scrollLeft(),
+//         y: jump_pad1[0].offsetTop - jump_pad1.scrollTop(),
+//         width: jump_pad1.outerWidth(),
+//         height: jump_pad1.outerHeight()
+//     }
 
-//             // console.log(e);
-//             // console.log(e.which);
-//             // console.log(e.key);
+//     if (sonic_collision.x > jump_pad_collision.x + jump_pad_collision.width ||
+//         sonic_collision.x + sonic_width < jump_pad_collision.x ||
+//         sonic_collision.y > jump_pad_collision.y + jump_pad_collision.height ||
+//         sonic_collision.y + sonic_collision.height < jump_pad_collision.y) {
 
-//             // keys[e.which] = e.type == 'keydown';
-//             keys[e.key] = true;
+//         // console.log("NO Collision Detected");
+//         // sonic.css("background-color", "blue");
+//         // jump_pad1.css("background-color", "red");
 
-//             switch (e.which) {
+//     } else {
+//         // console.log("Collision Detected");
+//         // jump_pad1.css("display", "none");
+//         // sonic.css("background-color", "black");
+//         // jump_pad1.css("background-color", "black");
 
-//                 case 37: // left
-//                     move_state = false;
-//                     sonic.removeClass("animate_onBarrier");
-
-//                     if (!jump_state) {
-
-//                         sonic.addClass("flip-standing");
-//                         isFlipped = sonic.hasClass("flip-standing");
-//                         sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
-
-//                         moveLeft();
-
-//                     } else { // up + left
-//                         sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-//                         moveUp_Left();
-//                     }
-
-//                     break;
-
-//                 case 38: // up
-//                     jump_state = true;
-//                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-
-//                     moveUp();
-//                     break;
-
-//                 case 39: // right
-//                     move_state = true;
-//                     sonic.removeClass("animate_onBarrier");
-
-//                     if (!jump_state) { // if not jumped at the moment (jump_state = false)
-//                         sonic.removeClass("flip-standing");
-//                         isFlipped = sonic.hasClass("flip-standing");
-
-//                         sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
-//                         moveRight();
-
-//                     } else { // up + right
-//                         sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-//                         moveUp_Right();
-//                     }
-
-//                     break;
-
-//                 case 40: // down
-//                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-//                     moveDown();
-
-//                     // sonic.css("top", sonic_startPosY + 10);
-
-//                     break;
-
-//                 case 83: // A
-//                     sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
-//                     if (isFlipped) { // if turn back
-//                         boost_Left();
-
-//                     } else {
-//                         boost_Right();
-//                     }
-//                     break;
-
-//                 case 32: // space bar --> to jump at same position
-//                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-//                     jump_OnSpaceBar();
-//                     break;
-
-//                 default:
-//                     break;
-//             }
-
-//             check_ring_collision();
-//             // check_jumpPad_collision();
-
-//             switch (stage_count) {
-//                 case 1:
-//                     check_barrier_collision();
-//                     break;
-
-//                 case 3:
-//                     check_barrier_collision();
-//                     break;
-
-//                 default:
-//                     break;
-//             }
-//         },
-
-//         keyup: function (e) {
-
-//             if (e.which == 38 || e.which == 32 || e.which == 39 || e.which == 37) { // when up key is released prevent from going down from the ground level
-//                 // if (e.which == 38 || e.which == 32) { // when up key is released prevent from going down from the ground level
-//                 avoidMove_belowGroundLevel();
-//             }
-
-//             sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
-//             jump_state = false;
-//             delete keys[e.key];
-//         }
-//     });
+//         // sonic.removeClass("sonic_top");
+//         // sonic.addClass("sonic_alt_top");
+//         // sonic.css("top", sonic_collision.x);
+//     }
 // }
-
-
-
 
 /* ---------------------------------------------------------------------------------------------------------------------------- */
 
-function moveUp() {
-    sonic_startPosY = sonic[0].offsetTop;
-
-    // console.log(keys);
-
-    if (keys["ArrowRight"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-        moveUp_Right();
-
-    } else if (keys["ArrowLeft"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-        moveUp_Left();
-    }
-
-    if (sonic_startPosY <= 91) {
-        avoidMove_atTopEdge();
-    }
-
-    sonic.finish().animate({
-        top: "40%"
-    });
-
-    // sonic.css("top", sonic_startPosY - 10);
-}
-
-function moveRight() {
-    sonic_startPosX = sonic[0].offsetLeft;
-
-    // console.log(keys);
-
-    if (keys["ArrowUp"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-        moveUp_Right();
-    }
-
-    if (sonic_startPosX >= screen.availWidth) {
-        change_Stage();
-        moveTo_InitialPosition();
-    }
-
-    sonic.finish().animate({
-        left: "+=10"
-    });
-}
-
-function moveLeft() {
-    sonic_startPosX = sonic[0].offsetLeft;
-
-    if (keys["ArrowUp"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-        moveUp_Left();
-    }
-
-    if (sonic_startPosX <= 90) {
-        avoidMove_atLeftEdge();
-    }
-
-    sonic.finish().animate({
-        left: "-=10"
-    });
-}
-
-
+var timerId = setInterval(playGame, 100);
+var keys = {};
 
 function playGame() {
     clearInterval(timerId);
@@ -891,9 +689,7 @@ function playGame() {
     });
 }
 
-
 /* ---------------------------------------------------------------------------------------------------------------------------- */
-
 
 $("#btn_goToMenu").click(function (e) {
     window.location.href = "index.html";
@@ -952,11 +748,7 @@ $("#btnResume").click(function (e) {
     $("#btnResume").addClass("pause");
 
     remove_blur();
-
-    // $("#pause-bg").css("display", "none");
-    // $("#title-img").css("display", "none");
     hide_components();
-
     playBgTrack();
     playGame();
 
@@ -967,12 +759,13 @@ $("#btnRestart").click(function (e) {
     $("#btnPause").removeClass("pause");
     $("#btnResume").removeClass("pause");
     $("#btnRestart").addClass("pause");
+
     remove_blur();
-    // $("#pause-bg").css("display", "none");
-    // $("#title-img").css("display", "none");
     hide_components();
+
     initial_lifes = 3;
     life.text("x " + initial_lifes);
+
     restartGame();
     sonic.css("display", "block");
 });

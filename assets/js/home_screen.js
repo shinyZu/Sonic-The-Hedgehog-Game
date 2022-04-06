@@ -16,7 +16,6 @@ $("#sound-icon").click(function (e) {
 });
 
 $("#btnPlay").click(function (e) {
-    // $(document).load('../../index2.html');
     window.location.href = "index2.html";
 });
 
