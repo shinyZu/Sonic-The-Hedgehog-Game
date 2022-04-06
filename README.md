@@ -1,4 +1,4 @@
-# **Hello 👋**
+# **SONIC - The Hedgehog**
 
 This is a small game that I developed with JavaScript (using JQuery Library)..<br>
 Hope you'll enjoy it..
