@@ -34,7 +34,7 @@ let ring_array = [];
 
 var active_ring;
 
-let jump_state = false;
+// let jump_state = false;
 let isFlipped = false;
 
 let sonic_collision;
@@ -136,48 +136,55 @@ function restartGame() {
     $(score).text("0" + initial_score);
 }
 
-function moveLeft() {
-    sonic_startPosX = sonic[0].offsetLeft;
+// function moveLeft() {
+//     sonic_startPosX = sonic[0].offsetLeft;
 
-    if (sonic_startPosX <= 90) {
-        avoidMove_atLeftEdge();
-    }
+//     if (sonic_startPosX <= 90) {
+//         avoidMove_atLeftEdge();
+//     }
 
-    sonic.finish().animate({
-        left: "-=10"
-    });
-}
+//     sonic.finish().animate({
+//         left: "-=10"
+//     });
+// }
 
-function moveUp() {
-    sonic_startPosY = sonic[0].offsetTop;
+/*----------------------------------------------- */
 
-    if (sonic_startPosY <= 91) {
-        avoidMove_atTopEdge();
-    }
+// function moveUp() {
+//     sonic_startPosY = sonic[0].offsetTop;
 
-    sonic.finish().animate({
-        top: "40%"
-        // top: "-=10"
-    });
+//     if (sonic_startPosY <= 91) {
+//         avoidMove_atTopEdge();
+//     }
 
-    // sonic.addClass("moveUp");
+//     sonic.finish().animate({
+//         top: "40%"
+//     });
 
-    // sonic.css("top", sonic_startPosY - 10);
+//     // sonic.css("top", sonic_startPosY - 10);
+// }
 
-}
+/*----------------------------------------------- */
 
-function moveRight() {
-    sonic_startPosX = sonic[0].offsetLeft;
+// function moveRight() {
+//     sonic_startPosX = sonic[0].offsetLeft;
 
-    // if (sonic_startPosX >= 1410) {
-    if (sonic_startPosX >= screen.availWidth) {
-        change_Stage();
-    }
+//     // console.log(keys);
 
-    sonic.finish().animate({
-        left: "+=10"
-    });
-}
+//     // if (keys["ArrowRight"] && keys["ArrowUp"]) {
+//     //     console.log(2222222222222222222);
+//     // }
+
+//     // if (sonic_startPosX >= 1410) {
+//     if (sonic_startPosX >= screen.availWidth) {
+//         change_Stage();
+//         moveTo_InitialPosition();
+//     }
+
+//     sonic.finish().animate({
+//         left: "+=10"
+//     });
+// }
 
 function moveDown() {
     sonic_startPosY = sonic[0].offsetTop;
@@ -203,16 +210,17 @@ function moveUp_Left() {
     }
 
     sonic.finish().animate({
-        // top: "-=20",
-        left: "-=20"
+        // left: "-=20"
+        left: "-=10"
     });
 }
 
 function moveUp_Right() {
+    // sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+
     sonic_startPosY = sonic[0].offsetTop;
     sonic_startPosX = sonic[0].offsetLeft;
 
-    // if (sonic[0].offsetLeft >= 1410) {
     if (sonic[0].offsetLeft >= screen.availWidth) {
         change_Stage();
     }
@@ -222,10 +230,9 @@ function moveUp_Right() {
     }
 
     sonic.finish().animate({
-        // top: "-=5",
-        left: "+=20"
+        // left: "+=20"
+        left: "+=10"
     });
-
 }
 
 function avoidMove_atLeftEdge() {
@@ -356,7 +363,6 @@ function change_Stage() {
             sonic.animate({
                 left: "1410"
             });
-            // console.log(3);
             displayPlayerResults();
             break;
     }
@@ -611,69 +617,236 @@ function check_barrier_collision() {
 
 var timerId = setInterval(playGame, 100);
 
+var keys = {};
+var move_state = false;
+
+// function playGame() {
+//     clearInterval(timerId);
+
+//     $(document).on({
+//         keydown: function (e) {
+
+//             // console.log(e);
+//             // console.log(e.which);
+//             // console.log(e.key);
+
+//             // keys[e.which] = e.type == 'keydown';
+//             keys[e.key] = true;
+
+//             switch (e.which) {
+
+//                 case 37: // left
+//                     move_state = false;
+//                     sonic.removeClass("animate_onBarrier");
+
+//                     if (!jump_state) {
+
+//                         sonic.addClass("flip-standing");
+//                         isFlipped = sonic.hasClass("flip-standing");
+//                         sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+
+//                         moveLeft();
+
+//                     } else { // up + left
+//                         sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+//                         moveUp_Left();
+//                     }
+
+//                     break;
+
+//                 case 38: // up
+//                     jump_state = true;
+//                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+
+//                     moveUp();
+//                     break;
+
+//                 case 39: // right
+//                     move_state = true;
+//                     sonic.removeClass("animate_onBarrier");
+
+//                     if (!jump_state) { // if not jumped at the moment (jump_state = false)
+//                         sonic.removeClass("flip-standing");
+//                         isFlipped = sonic.hasClass("flip-standing");
+
+//                         sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+//                         moveRight();
+
+//                     } else { // up + right
+//                         sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+//                         moveUp_Right();
+//                     }
+
+//                     break;
+
+//                 case 40: // down
+//                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+//                     moveDown();
+
+//                     // sonic.css("top", sonic_startPosY + 10);
+
+//                     break;
+
+//                 case 83: // A
+//                     sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
+//                     if (isFlipped) { // if turn back
+//                         boost_Left();
+
+//                     } else {
+//                         boost_Right();
+//                     }
+//                     break;
+
+//                 case 32: // space bar --> to jump at same position
+//                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+//                     jump_OnSpaceBar();
+//                     break;
+
+//                 default:
+//                     break;
+//             }
+
+//             check_ring_collision();
+//             // check_jumpPad_collision();
+
+//             switch (stage_count) {
+//                 case 1:
+//                     check_barrier_collision();
+//                     break;
+
+//                 case 3:
+//                     check_barrier_collision();
+//                     break;
+
+//                 default:
+//                     break;
+//             }
+//         },
+
+//         keyup: function (e) {
+
+//             if (e.which == 38 || e.which == 32 || e.which == 39 || e.which == 37) { // when up key is released prevent from going down from the ground level
+//                 // if (e.which == 38 || e.which == 32) { // when up key is released prevent from going down from the ground level
+//                 avoidMove_belowGroundLevel();
+//             }
+
+//             sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+//             jump_state = false;
+//             delete keys[e.key];
+//         }
+//     });
+// }
+
+
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------- */
+
+function moveUp() {
+    sonic_startPosY = sonic[0].offsetTop;
+
+    // console.log(keys);
+
+    if (keys["ArrowRight"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Right();
+
+    } else if (keys["ArrowLeft"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Left();
+    }
+
+    if (sonic_startPosY <= 91) {
+        avoidMove_atTopEdge();
+    }
+
+    sonic.finish().animate({
+        top: "40%"
+    });
+
+    // sonic.css("top", sonic_startPosY - 10);
+}
+
+function moveRight() {
+    sonic_startPosX = sonic[0].offsetLeft;
+
+    // console.log(keys);
+
+    if (keys["ArrowUp"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Right();
+    }
+
+    if (sonic_startPosX >= screen.availWidth) {
+        change_Stage();
+        moveTo_InitialPosition();
+    }
+
+    sonic.finish().animate({
+        left: "+=10"
+    });
+}
+
+function moveLeft() {
+    sonic_startPosX = sonic[0].offsetLeft;
+
+    if (keys["ArrowUp"]) {
+        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        moveUp_Left();
+    }
+
+    if (sonic_startPosX <= 90) {
+        avoidMove_atLeftEdge();
+    }
+
+    sonic.finish().animate({
+        left: "-=10"
+    });
+}
+
+
+
 function playGame() {
     clearInterval(timerId);
-    $(document).on({
 
+    $(document).on({
         keydown: function (e) {
+            keys[e.key] = true;
 
             switch (e.which) {
 
                 case 37: // left
                     sonic.removeClass("animate_onBarrier");
-
-                    if (!jump_state) {
-
-                        sonic.addClass("flip-standing");
-                        isFlipped = sonic.hasClass("flip-standing");
-                        sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
-
-                        moveLeft();
-
-                    } else { // up + left
-                        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                        moveUp_Left();
-                    }
-
+                    sonic.addClass("flip-standing");
+                    isFlipped = sonic.hasClass("flip-standing");
+                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+                    moveLeft();
                     break;
 
                 case 38: // up
-                    jump_state = true;
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-
                     moveUp();
                     break;
 
                 case 39: // right
                     sonic.removeClass("animate_onBarrier");
-
-                    if (!jump_state) { // if not jumped at the moment (jump_state = false)
-                        sonic.removeClass("flip-standing");
-                        isFlipped = sonic.hasClass("flip-standing");
-
-                        sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
-                        moveRight();
-
-                    } else { // up + right
-                        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
-                        moveUp_Right();
-                    }
+                    sonic.removeClass("flip-standing");
+                    isFlipped = sonic.hasClass("flip-standing");
+                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+                    moveRight();
 
                     break;
 
                 case 40: // down
                     sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
                     moveDown();
-
                     // sonic.css("top", sonic_startPosY + 10);
-
                     break;
 
                 case 83: // A
                     sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
                     if (isFlipped) { // if turn back
                         boost_Left();
-
                     } else {
                         boost_Right();
                     }
@@ -710,16 +883,17 @@ function playGame() {
             if (e.which == 38 || e.which == 32 || e.which == 39 || e.which == 37) { // when up key is released prevent from going down from the ground level
                 // if (e.which == 38 || e.which == 32) { // when up key is released prevent from going down from the ground level
                 avoidMove_belowGroundLevel();
-
             }
 
             sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
-            // sonic.removeClass("moveUp");
-            jump_state = false;
-
+            delete keys[e.key];
         }
     });
 }
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------- */
+
 
 $("#btn_goToMenu").click(function (e) {
     window.location.href = "index.html";
