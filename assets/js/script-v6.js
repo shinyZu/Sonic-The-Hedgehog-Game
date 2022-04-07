@@ -304,6 +304,56 @@ function jump_OnSpaceBar() {
         bottom: "+=5"
         // top: "10%"
     });
+
+    sonic_collision = {
+        x: sonic[0].offsetLeft,
+        y: sonic[0].offsetTop,
+        width: sonic_width,
+        height: sonic_height,
+        right: sonic_boundingRect.right
+    };
+
+    for (let i in ring_array) {
+        active_ring = ring_array[i]
+        active_ring_boundingRect = active_ring[0].getBoundingClientRect();
+
+        ring_collision = {
+            x: active_ring[0].offsetLeft,
+            y: active_ring[0].offsetTop,
+            width: ring_width,
+            height: ring_height,
+            right: active_ring_boundingRect.right + 90,
+            left: active_ring_boundingRect.left
+        };
+
+        if (ring_collision.x + ring_collision.width < sonic_collision.x + sonic_collision.width &&
+            ring_collision.y > sonic_collision.y &&
+            ring_collision.y + ring_collision.height > sonic_collision.y + sonic_collision.height) {
+
+            // sonic.css("background-color", "green");
+            // active_ring.css("background-color", "green");
+
+            if (sonic_startPosX >= screen.availWidth) {
+                if (stage_count == 3) {
+                    final_score = initial_score;
+                    $(score).text(final_score);
+                    return;
+                }
+            }
+
+            initial_score = initial_score + 10;
+            $(score).text(initial_score);
+
+            active_ring.css("display", "none");
+            audio2.play();
+            audio2.currentTime = 0;
+
+        } else {
+            // console.log("NO Collision Detected");
+            // sonic.css("background-color", "blue");
+            // active_ring.css("background-color", "red");
+        }
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------- */
@@ -438,7 +488,8 @@ function check_ring_collision() {
         x: sonic[0].offsetLeft,
         y: sonic[0].offsetTop,
         width: sonic_width,
-        height: sonic_boundingRect.height,
+        // height: sonic_boundingRect.height,
+        height: sonic_height,
         right: sonic_boundingRect.right
     };
 
@@ -455,8 +506,13 @@ function check_ring_collision() {
             left: active_ring_boundingRect.left
         };
 
-        if (sonic_collision.x < ring_collision.right &&
-            sonic_collision.x + sonic_collision.width > ring_collision.right &&
+        // if (sonic_collision.x < ring_collision.right &&
+        //     sonic_collision.x + sonic_collision.width > ring_collision.right) {
+        // sonic_collision.y < ring_collision.y + ring_collision.height &&
+        // sonic_collision.y + sonic_collision.height > ring_collision.y) {
+
+        if (sonic_collision.x < ring_collision.x + ring_collision.width &&
+            sonic_collision.x + sonic_collision.width > ring_collision.x + ring_collision.width &&
             sonic_collision.y < ring_collision.y + ring_collision.height &&
             sonic_collision.y + sonic_collision.height > ring_collision.y) {
 
@@ -464,20 +520,51 @@ function check_ring_collision() {
             // sonic.css("background-color", "black");
             // active_ring.css("background-color", "black");
 
-            if (sonic_startPosX >= screen.availWidth) {
-                if (stage_count == 3) {
-                    final_score = initial_score;
-                    $(score).text(final_score);
-                    return;
+
+            // if (ring_collision.x > sonic_collision.x &&
+            //     ring_collision.x + ring_collision.width < sonic_collision.x + sonic_collision.width &&
+            if (ring_collision.y > sonic_collision.y &&
+                ring_collision.y + ring_collision.height < sonic_collision.y + sonic_collision.height) {
+
+                // sonic.css("background-color", "green");
+                // active_ring.css("background-color", "green");
+
+                if (sonic_startPosX >= screen.availWidth) {
+                    if (stage_count == 3) {
+                        final_score = initial_score;
+                        $(score).text(final_score);
+                        return;
+                    }
                 }
+
+                initial_score = initial_score + 10;
+                $(score).text(initial_score);
+
+                active_ring.css("display", "none");
+                audio2.play();
+                audio2.currentTime = 0;
+
+            } else {
+                // console.log("NO Collision Detected");
+                // sonic.css("background-color", "blue");
+                // active_ring.css("background-color", "red");
             }
 
-            initial_score = initial_score + 10;
-            $(score).text(initial_score);
 
-            active_ring.css("display", "none");
-            audio2.play();
-            audio2.currentTime = 0;
+            // if (sonic_startPosX >= screen.availWidth) {
+            //     if (stage_count == 3) {
+            //         final_score = initial_score;
+            //         $(score).text(final_score);
+            //         return;
+            //     }
+            // }
+
+            // initial_score = initial_score + 10;
+            // $(score).text(initial_score);
+
+            // active_ring.css("display", "none");
+            // audio2.play();
+            // audio2.currentTime = 0;
 
         } else {
 
