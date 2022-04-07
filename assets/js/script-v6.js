@@ -117,15 +117,24 @@ function game_over() {
 
 function restartGame() {
     clearTimeout(restart_timerId);
+    sonic.css("display", "block");
+    keys = {};
     audio1.currentTime = 0;
     playBgTrack();
-    playGame();
+    alt_rings();
+
 
     gameStage.css("margin-left", "0%").css("transition", "margin-left 0.5s");
     moveTo_InitialPosition();
     setTimeout(showRings, 800);
 
+
+    check_ring_collision();
+    playGame();
+
+
     stage_count = 0;
+    // ring_array[1].css("left", "35%");
     initial_score = 0;
     $(score).text("0" + initial_score);
 }
@@ -388,7 +397,7 @@ function moveTo_InitialPosition() {
     }
     sonic.animate({
         left: "6%",
-        top: "73%"
+        top: "72%"
     });
 }
 
@@ -461,6 +470,7 @@ function alt_rings() {
             // console.log("stage count is 0 : " + stage_count);
             ring_array[2].removeClass("ring_top");
             ring_array[2].addClass("alt_ring_top");
+            ring_array[1].css("left", "35%");
             break;
 
         case 1:
@@ -489,6 +499,8 @@ function alt_rings() {
 }
 
 function check_ring_collision() {
+    sonic_boundingRect = sonic[0].getBoundingClientRect();
+
     sonic_collision = {
         x: sonic[0].offsetLeft,
         y: sonic[0].offsetTop,
@@ -554,6 +566,7 @@ function check_ring_collision() {
                 // console.log("NO Collision Detected");
                 // sonic.css("background-color", "blue");
                 // active_ring.css("background-color", "red");
+
             }
 
 
@@ -578,6 +591,7 @@ function check_ring_collision() {
             // active_ring.css("display", "block");
             // sonic.css("background-color", "blue");
             // active_ring.css("background-color", "red");
+
         }
     }
 }
@@ -850,19 +864,20 @@ $("#btnResume").click(function (e) {
 });
 
 $("#btnRestart").click(function (e) {
-    $("body").css("pointer-events", "auto");
-    $("#btnPause").removeClass("pause");
-    $("#btnResume").removeClass("pause");
-    $("#btnRestart").addClass("pause");
+    // $("body").css("pointer-events", "auto");
+    // $("#btnPause").removeClass("pause");
+    // $("#btnResume").removeClass("pause");
+    // $("#btnRestart").addClass("pause");
 
-    remove_blur();
-    hide_components();
+    // remove_blur();
+    // hide_components();
 
-    initial_lifes = 3;
-    life.text("x " + initial_lifes);
+    // initial_lifes = 3;
+    // life.text("x " + initial_lifes);
 
-    restartGame();
-    sonic.css("display", "block");
+    location.reload();
+    // restartGame();
+    // sonic.css("display", "block");
 });
 
 function hide_components() {

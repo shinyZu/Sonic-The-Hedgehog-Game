@@ -34,6 +34,16 @@ $("#btnClose").click(function (e) {
 });
 
 
+$("#help").hover(function () {
+    // over
+    $("#help").css("cursor", "grab");
+
+}, function () {
+    // out
+    $("#help").css("cursor", "pointer");
+}
+);
+
 $(function () {
     $("#help").draggable();
 });
