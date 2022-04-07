@@ -32,3 +32,8 @@ $("#btnClose").click(function (e) {
     $("#home-bg").removeClass("bg-blur")
     $("div#controller-icons>button#help-icon").removeClass("pressed");
 });
+
+
+$(function () {
+    $("#help").draggable();
+});

@@ -41,9 +41,10 @@ let jump_pad_collision;
 let barrier1_collision;
 var x_pos;
 
-var barrier_boundingRect = barrier1[0].getBoundingClientRect();
-var sonic_boundingRect = sonic[0].getBoundingClientRect();
-var active_ring_boundingRect = ring1[0].getBoundingClientRect();
+let barrier_boundingRect = barrier1[0].getBoundingClientRect();
+let sonic_boundingRect = sonic[0].getBoundingClientRect();
+let ring_boundingRect = ring1[0].getBoundingClientRect();
+let active_ring_boundingRect = ring1[0].getBoundingClientRect();
 
 let audio1 = new Audio();
 audio1.src = "../assets/audio/BridgeZone.mp3";
@@ -310,12 +311,14 @@ function jump_OnSpaceBar() {
         y: sonic[0].offsetTop,
         width: sonic_width,
         height: sonic_height,
+        left: sonic_boundingRect.left,
         right: sonic_boundingRect.right
     };
 
     for (let i in ring_array) {
         active_ring = ring_array[i]
         active_ring_boundingRect = active_ring[0].getBoundingClientRect();
+        // sonic_boundingRect = sonic[0].getBoundingClientRect();
 
         ring_collision = {
             x: active_ring[0].offsetLeft,
@@ -326,7 +329,9 @@ function jump_OnSpaceBar() {
             left: active_ring_boundingRect.left
         };
 
-        if (ring_collision.x + ring_collision.width < sonic_collision.x + sonic_collision.width &&
+        if (
+            ring_collision.x > sonic_collision.left &&
+            ring_collision.x + ring_collision.width < sonic_collision.x + sonic_collision.width &&
             ring_collision.y > sonic_collision.y &&
             ring_collision.y + ring_collision.height > sonic_collision.y + sonic_collision.height) {
 
@@ -490,6 +495,7 @@ function check_ring_collision() {
         width: sonic_width,
         // height: sonic_boundingRect.height,
         height: sonic_height,
+        left: sonic_boundingRect.left,
         right: sonic_boundingRect.right
     };
 
@@ -569,6 +575,7 @@ function check_ring_collision() {
         } else {
 
             // console.log("NO Collision Detected");
+            // active_ring.css("display", "block");
             // sonic.css("background-color", "blue");
             // active_ring.css("background-color", "red");
         }
@@ -696,6 +703,7 @@ function playGame() {
 
     $(document).on({
         keydown: function (e) {
+            sonic_boundingRect = sonic[0].getBoundingClientRect();
             keys[e.key] = true;
 
             switch (e.which) {
@@ -867,4 +875,48 @@ function hide_components() {
     $("#gameWin-bg").css("display", "none");
     $("#gameWin_title-img").css("display", "none");
 }
+
+$(function () {
+    $("#game-controls").draggable({
+        containment: "window"
+    });
+});
+
+
+// $("#game-controls>div#move").css("display", "none");
+$("#game-controls").hover(function () {
+    // over
+    $("#game-controls").css("cursor", "grab");
+    // $("#game-controls>div#move").css("display", "block");
+    // $("#game-controls").css("box-shadow", "10px 11px 19px -5px #7c7c7c");
+
+}, function () {
+    // out
+    $("#game-controls").css("cursor", "pointer");
+    // $("#game-controls>div#move").css("display", "none");
+    // $("#game-controls").css("box-shadow", "none");
+}
+);
+
+$(function () {
+    $("#scoreBoard").draggable({
+        containment: "window"
+    });
+});
+
+// $("#scoreBoard>div#move_scoreBoard").css("display", "none");
+$("#scoreBoard").hover(function () {
+    // over
+    $("#scoreBoard").css("cursor", "grab");
+    // $("#scoreBoard>div#move_scoreBoard").css("display", "block");
+    // $("#scoreBoard").css("box-shadow", "10px 11px 19px -5px #7c7c7c");
+
+
+}, function () {
+    // out
+    $("#scoreBoard").css("cursor", "pointer");
+    // $("#scoreBoard>div#move_scoreBoard").css("display", "none");
+    // $("#scoreBoard").css("box-shadow", "none");
+}
+);
 

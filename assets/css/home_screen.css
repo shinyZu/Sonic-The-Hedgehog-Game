@@ -160,6 +160,10 @@ section#help button#btnClose:hover {
     height: 12%;
 }
 
+section#help:active {
+    cursor: grabbing;
+}
+
 /* ---------------------------------------------------------- */
 
 .bg-blur {

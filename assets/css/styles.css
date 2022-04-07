@@ -39,7 +39,7 @@ div#sonic.flip-standing {
 }
 
 div#sonic {
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     width: 180px;
     height: 250px;
     background-image: url('../images/sonic_standing.gif');
@@ -102,7 +102,7 @@ div#sonic_spin {
 
 
 div.ring {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     width: 100px;
     height: 100px;
     background-image: url('../images/ring3.gif');
@@ -224,14 +224,50 @@ section#bg-container1>section#bg-container2>div.bg:nth-child(4)>div.level#level2
 }
 
 /* ------------------------------Score, Life Info-------------------------------- */
+div#scoreBoard {
+    /* border: 5px solid red; */
+    /* box-shadow: 10px 11px 19px 0px #4773b3; */
+    width: 100px;
+    height: 116px;
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    border-radius: 10px;
+    background: transparent;
+}
+
+div#scoreBoard div#move_scoreBoard {
+    /* border: 5px solid red; */
+    width: 15px;
+    height: 15px;
+    position: relative;
+    top: -5px;
+    left: 90px;
+}
+
+div#scoreBoard div#move_scoreBoard>i {
+    /* border: 2px solid purple; */
+    position: relative;
+    width: 15px;
+    height: 15px;
+    color: black;
+}
+
+div#scoreBoard div#move_scoreBoard:hover {
+    cursor: grabbing;
+}
+
+div#scoreBoard div#move_scoreBoard:active {
+    cursor: grab;
+}
 
 div#score-img {
     /* border: 5px solid red; */
     width: 45px;
     height: 42px;
     position: absolute;
-    top: 20px;
-    left: 22px;
+    top: 10px;
+    left: 8px;
     background-image: url("../images/menu/score.png");
     background-size: contain;
     background-position: center;
@@ -250,8 +286,8 @@ div#life-img {
     width: 102px;
     height: 50px;
     position: absolute;
-    top: 80px;
-    left: 0px;
+    top: 68px;
+    left: -15px;
     background-image: url("../images/menu/life.png");
     background-size: contain;
     background-position: center;
@@ -277,7 +313,10 @@ div#game-controls {
     display: flex;
     justify-content: space-evenly;
     /* flex-direction: column; */
+    padding: 5px;
 }
+
+
 
 div#game-controls>button {
     /* border: 2px solid blue; */
@@ -321,6 +360,31 @@ div#game-controls>button#btnRestart {
     background-image: url("../images/menu/restart.png");
     background-size: cover;
     background-position: center;
+}
+
+div#game-controls>div#move {
+    /* border: 5px solid red; */
+    width: 15px;
+    height: 15px;
+    position: relative;
+    top: -10px;
+    right: 3px;
+}
+
+div#game-controls>div#move:hover {
+    cursor: grabbing;
+}
+
+div#game-controls>div#move:active {
+    cursor: grab;
+}
+
+div#game-controls div#move>i {
+    /* border: 2px solid purple; */
+    position: relative;
+    width: 15px;
+    height: 15px;
+    color: black;
 }
 
 /* ------------------------------Pause & Resume Game-------------------------------- */
