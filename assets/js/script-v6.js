@@ -47,21 +47,21 @@ let ring_boundingRect = ring1[0].getBoundingClientRect();
 let active_ring_boundingRect = ring1[0].getBoundingClientRect();
 
 let audio1 = new Audio();
-audio1.src = "../assets/audio/BridgeZone.mp3";
+audio1.src = "assets/audio/BridgeZone.mp3";
 audio1.play();
 audio1.loop = true;
 
 let audio2 = new Audio();
-audio2.src = "../assets/audio/RingCollect.mp3";
+audio2.src = "assets/audio/RingCollect.mp3";
 
 let audio3 = new Audio();
-audio3.src = "../assets/audio/GameOver2.wav";
+audio3.src = "assets/audio/GameOver2.wav";
 
 let audio4 = new Audio();
-audio4.src = "../assets/audio/GameOver.mp3";
+audio4.src = "assets/audio/GameOver.mp3";
 
 let audio5 = new Audio();
-audio5.src = "../assets/audio/ActCleared.mp3";
+audio5.src = "assets/audio/ActCleared.mp3";
 
 (function () {
     hide_components();
@@ -145,11 +145,11 @@ function moveUp() {
     sonic_startPosY = sonic[0].offsetTop;
 
     if (keys["ArrowRight"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        sonic.css("background-image", "url('assets/images/sonic_spinning.gif')");
         moveUp_Right();
 
     } else if (keys["ArrowLeft"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        sonic.css("background-image", "url('assets/images/sonic_spinning.gif')");
         moveUp_Left();
     }
 
@@ -168,7 +168,7 @@ function moveRight() {
     sonic_startPosX = sonic[0].offsetLeft;
 
     if (keys["ArrowUp"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        sonic.css("background-image", "url('assets/images/sonic_spinning.gif')");
         moveUp_Right();
     }
 
@@ -186,7 +186,7 @@ function moveLeft() {
     sonic_startPosX = sonic[0].offsetLeft;
 
     if (keys["ArrowUp"]) {
-        sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+        sonic.css("background-image", "url('assets/images/sonic_spinning.gif')");
         moveUp_Left();
     }
 
@@ -391,7 +391,7 @@ function avoidMove_belowGroundLevel() {
 }
 
 function moveTo_InitialPosition() {
-    sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+    sonic.css("background-image", "url('assets/images/sonic_standing.gif')");
     if (isFlipped) {
         sonic.removeClass("flip-standing");
     }
@@ -645,7 +645,7 @@ function check_barrier_collision() {
         // sonic.css("background-color", "black");
         // barrier1.css("background-color", "black");
 
-        sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+        sonic.css("background-image", "url('assets/images/sonic_standing.gif')");
         $(document).off("keydown");
         $(document).off("keyup");
 
@@ -726,12 +726,12 @@ function playGame() {
                     sonic.removeClass("animate_onBarrier");
                     sonic.addClass("flip-standing");
                     isFlipped = sonic.hasClass("flip-standing");
-                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+                    sonic.css("background-image", "url('assets/images/sonic_walking.gif')");
                     moveLeft();
                     break;
 
                 case 38: // up
-                    sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                    sonic.css("background-image", "url('assets/images/sonic_spinning.gif')");
                     moveUp();
                     break;
 
@@ -739,19 +739,19 @@ function playGame() {
                     sonic.removeClass("animate_onBarrier");
                     sonic.removeClass("flip-standing");
                     isFlipped = sonic.hasClass("flip-standing");
-                    sonic.css("background-image", "url('../assets/images/sonic_walking.gif')");
+                    sonic.css("background-image", "url('assets/images/sonic_walking.gif')");
                     moveRight();
 
                     break;
 
                 case 40: // down
-                    sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                    sonic.css("background-image", "url('assets/images/sonic_spinning.gif')");
                     moveDown();
                     // sonic.css("top", sonic_startPosY + 10);
                     break;
 
                 case 83: // A
-                    sonic.css("background-image", "url('../assets/images/sonic_running.gif')");
+                    sonic.css("background-image", "url('assets/images/sonic_running.gif')");
                     if (isFlipped) { // if turn back
                         boost_Left();
                     } else {
@@ -760,7 +760,7 @@ function playGame() {
                     break;
 
                 case 32: // space bar --> to jump at same position
-                    sonic.css("background-image", "url('../assets/images/sonic_spinning.gif')");
+                    sonic.css("background-image", "url('assets/images/sonic_spinning.gif')");
                     jump_OnSpaceBar();
                     break;
 
@@ -792,7 +792,7 @@ function playGame() {
                 avoidMove_belowGroundLevel();
             }
 
-            sonic.css("background-image", "url('../assets/images/sonic_standing.gif')");
+            sonic.css("background-image", "url('assets/images/sonic_standing.gif')");
             delete keys[e.key];
         }
     });

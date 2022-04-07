@@ -1,5 +1,5 @@
 let audio1 = new Audio();
-audio1.src = "../assets/audio/TitleScreen.mp3";
+audio1.src = "assets/audio/TitleScreen.mp3";
 audio1.play();
 // audio1.loop = true;
 
