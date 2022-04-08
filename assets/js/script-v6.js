@@ -833,7 +833,7 @@ function remove_blur() {
 
 $("#btnPause").click(function (e) {
     $("body").css("pointer-events", "none");
-    $("#btnPause").css("pointer-events", "auto");
+    $("#btnPause").css("pointer-events", "none");
     $("#btnResume").css("pointer-events", "auto");
     $("#btnRestart").css("pointer-events", "auto");
     $(document).off("keydown");
@@ -852,6 +852,7 @@ $("#btnPause").click(function (e) {
 
 $("#btnResume").click(function (e) {
     $("body").css("pointer-events", "auto");
+    $("#btnPause").css("pointer-events", "auto");
     $("#btnPause").removeClass("pause");
     $("#btnRestart").removeClass("pause");
     $("#btnResume").addClass("pause");

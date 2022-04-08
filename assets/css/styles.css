@@ -23,6 +23,15 @@ section#bg-container1>section#bg-container2>div.bg {
     background-position: center;
 }
 
+/* section#bg-container1>section#bg-container2>div.bg-flipped {
+    border: 2px solid blue;
+    width: 100%;
+    background-image: url('../images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: scaleX(-1);
+}*/
+
 /* ------------------------------Character Positions & Pauses-------------------------------- */
 
 div#sonic.flip-standing {
@@ -312,15 +321,15 @@ div#game-controls {
     right: 15px;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     /* flex-direction: column; */
     padding: 5px;
 }
 
-
-
 div#game-controls>button {
     /* border: 2px solid blue; */
-    width: 70px;
+    width: 66px;
+    height: 66px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -389,12 +398,12 @@ div#game-controls div#move>i {
 
 /* ------------------------------Pause & Resume Game-------------------------------- */
 
-.pause {
+div#game-controls>button#btnPause.pause {
     width: 75px;
     height: 75px;
 }
 
-.sound-on {
+div#game-controls>button#btnSound.sound-on {
     width: 75px;
     height: 75px;
 }

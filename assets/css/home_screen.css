@@ -2,6 +2,87 @@ body {
     overflow: hidden;
 }
 
+/* -----------------------------------Pre Loader---------------------------------------- */
+
+
+/* .loader {
+    border: 2px solid red;
+    color: #23754f;
+    font-size: 10px;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    text-indent: -9999em;
+    animation: mulShdSpin 1.3s infinite linear;
+    transform: translateZ(0);
+    z-index: 1;
+}
+
+@keyframes mulShdSpin {
+
+    0%,
+    100% {
+        box-shadow: 0 -3em 0 0.2em,
+            2em -2em 0 0em, 3em 0 0 -1em,
+            2em 2em 0 -1em, 0 3em 0 -1em,
+            -2em 2em 0 -1em, -3em 0 0 -1em,
+            -2em -2em 0 0;
+    }
+
+    12.5% {
+        box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em,
+            3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em,
+            -2em 2em 0 -1em, -3em 0 0 -1em,
+            -2em -2em 0 -1em;
+    }
+
+    25% {
+        box-shadow: 0 -3em 0 -0.5em,
+            2em -2em 0 0, 3em 0 0 0.2em,
+            2em 2em 0 0, 0 3em 0 -1em,
+            -2em 2em 0 -1em, -3em 0 0 -1em,
+            -2em -2em 0 -1em;
+    }
+
+    37.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em,
+            3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em,
+            -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+
+    50% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em,
+            3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em,
+            -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+
+    62.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em,
+            3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0,
+            -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+    }
+
+    75% {
+        box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em,
+            3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em,
+            -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+    }
+
+    87.5% {
+        box-shadow: 0em -3em 0 0, 2em -2em 0 -1em,
+            3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em,
+            -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+    }
+} */
+
+/* ------------------------------------------------------------------------------------------- */
+
 section#home-bg {
     /* border: 2px solid blue; */
     width: 100%;
@@ -61,8 +142,8 @@ button {
 }
 
 div#controller-icons>button.pressed {
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
 }
 
 button#btnPlay {
@@ -83,8 +164,10 @@ button#btnPlay:hover {
 
 div#controller-icons {
     /* border: 2px solid red; */
-    width: 90px;
-    height: 300px;
+    /* width: 90px;
+    height: 300px; */
+    width: 88px;
+    height: 220px;
     position: absolute;
     top: 20px;
     right: 20px;
@@ -96,12 +179,16 @@ div#controller-icons {
 
 div#controller-icons>button {
     /* border: 2px solid blue; */
-    height: 90px;
-    width: 90px;
+    /* height: 90px;
+    width: 90px; */
+    height: 66px;
+    width: 66px;
 }
 
 div#controller-icons>button:hover {
-    height: 95px;
+    /* height: 95px; */
+    height: 75px;
+    width: 75px;
 }
 
 div#controller-icons>button#setting-icon {
@@ -160,9 +247,9 @@ section#help button#btnClose:hover {
     height: 12%;
 }
 
-section#help:active {
+/* section#help:active {
     cursor: grabbing;
-}
+} */
 
 /* ---------------------------------------------------------- */
 
